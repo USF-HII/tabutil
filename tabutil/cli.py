@@ -63,32 +63,32 @@ def main():
 
     #-----------------------------------------------------------------------------------------
 
-    col_parser = subparsers.add_parser('col', help='col -h')
+    col_parser = subparsers.add_parser('col', help='col --help')
     col_parser.set_defaults(func=subcommand_col)
 
-    col_parser.add_argument('-e', '--extract', type=custom_parser_comma, action='append',
+    col_parser.add_argument('--extract', type=custom_parser_comma, action='append',
                             metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract')
 
-    col_parser.add_argument('-d', '--delete', type=custom_parser_comma, action='append',
+    col_parser.add_argument('--delete', type=custom_parser_comma, action='append',
                             metavar='COLUMN_NAME[,COLUMN_NAME]', dest='delete')
 
-    col_parser.add_argument('-r', '--rename', type=custom_parser_comma, action='append',
+    col_parser.add_argument('--rename', type=custom_parser_comma, action='append',
                             metavar='COLUMN_NAME[,COLUMN_NAME]', dest='rename')
 
     col_parser.add_argument('input_file')
 
     #-----------------------------------------------------------------------------------------
 
-    row_parser = subparsers.add_parser('row', help='row -h')
+    row_parser = subparsers.add_parser('row', help='row --help')
     row_parser.set_defaults(func=subcommand_row)
 
-    row_parser.add_argument('-e', '--extract', type=custom_parser_comma, action='append',
+    row_parser.add_argument('--extract', type=custom_parser_comma, action='append',
                             metavar='COLUMN_NAME:VALUE', dest='extract')
 
-    row_parser.add_argument('-d', '--delete', type=custom_parser_comma, action='append',
+    row_parser.add_argument('--delete', type=custom_parser_comma, action='append',
                             metavar='ROW_ID[,ROW_ID]', dest='delete')
 
-    row_parser.add_argument('-r', '--rename', type=custom_parser_comma, action='append',
+    row_parser.add_argument('--rename', type=custom_parser_comma, action='append',
                             metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID]', dest='rename')
 
     row_parser.add_argument('input_file')
