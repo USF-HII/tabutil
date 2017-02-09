@@ -36,12 +36,13 @@ if [[ ! -d ${venv} ]]; then
 fi
 
 if [[ $# -lt 1 ]]; then
-  echo "Usage: ${MYSELF} [-r|--reset] <[--bash]|ARGS...>" 2>&1
+  echo "Usage: ${MYSELF} [-r|--reset] bash|ARGS..." 2>&1
   exit 1
 fi
 
-if [[ $1 == '--bash' ]]; then
-  cat ${venv}/bin/activate
+if [[ $1 == 'bash' ]]; then
+  echo 'hi'
+  bash --init-file <(echo "[[ -f $HOME/.bash_profile ]] && source $HOME/.bash_profile; source ${venv}/bin/activate;")
 else
   source ${venv}/bin/activate
   "$@"
