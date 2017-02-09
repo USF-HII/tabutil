@@ -41,7 +41,6 @@ if [[ $# -lt 1 ]]; then
 fi
 
 if [[ $1 == 'bash' ]]; then
-  echo 'hi'
   bash --init-file <(echo "[[ -f $HOME/.bash_profile ]] && source $HOME/.bash_profile; source ${venv}/bin/activate;")
 else
   source ${venv}/bin/activate
