@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+MYSELF=$0
+BASE=$(readlink -f $(dirname ${MYSELF})/..)
+
+venv=${VENV:-${BASE}/.venv}
+
+if [[ ${1:-""} == '-r' || ${1:-""} == '--reset' ]]; then
+  shift # pop the -r or --reset off the argv variable $@
+
+  if [[ -d ${venv} ]]; then
+    echo
+    echo /bin/rm -rf ${venv} | /bin/bash -x
+  fi
+fi
+
+if [[ $# -lt 1 ]]; then
+  echo "Usage: ${MYSELF} [-r|--reset] <[--bash]|ARGS...>" 2>&1
+  exit 1
+fi
+
+if [[ ! -d ${venv} ]]; then
+  echo
+  echo virtualenv ${venv} | /bin/bash -x
+
+  echo
+  echo ${venv}/bin/pip install --upgrade pip | /bin/bash -x
+
+  if [[ -f ${BASE}/requirements.txt ]]; then
+    echo
+    echo ${venv}/bin/pip install -r ${BASE}/requirements.txt | /bin/bash -x
+  fi
+fi
+
+if [[ $1 == '--bash' ]]; then
+  cat ${venv}/bin/activate
+else
+  source ${venv}/bin/activate
+  "$@"
+fi
