@@ -1,3 +1,5 @@
+/dist
+/tabutil.egg-info
 /tmp
 /build
 /.venv

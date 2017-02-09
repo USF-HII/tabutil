@@ -13,13 +13,13 @@ setup(
     description='Table Utility with Plink-like functionality',
     author='Kevin Counts',
     author_email='counts@digicat.org',
-    license='GPL',
+    license='GPLv3',
     packages=[
         'tabutil',
     ],
     entry_points={
         'console_scripts': [
-            'tabutiln = tabutil.cli:launch_new_instance',
+            'tabutil = tabutil.cli:main',
         ]
     },
     install_requires=install_requires
