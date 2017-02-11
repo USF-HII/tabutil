@@ -9,7 +9,7 @@ install_requires = [
 
 setup(
     name='tabutil',
-    version='0.6.1',
+    version='0.6.2',
     description='Table Utility with Plink-like functionality',
     author='Kevin Counts',
     author_email='counts@digicat.org',
