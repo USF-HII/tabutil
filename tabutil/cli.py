@@ -20,44 +20,67 @@ def custom_parser_comma(astring, separator=','):
     alist = [a.strip() for a in alist if len(a)]
     return(alist)
 
+def read_spec(filename):
+    with open(filename) as f:
+        return([line.rstrip() for line in f])
+
 def subcommand_col(args):
-    if args.extract:
-        column_names = flatten(args.extract)
-        df = pd.read_csv(args.input_file, sep='\t', index_col=0)
+    separator = '\t'
+    df = pd.read_csv(args.input_file, sep=separator, index_col=0)
+    df.applymap(str)
+
+    if args.extract or args.extract_spec:
+        if args.extract_spec:
+            column_names = read_spec(args.extract_spec)
+        else:
+            column_names = flatten(args.extract)
+
         print(tabutil.core.extract_columns(df, *column_names))
 
-    elif args.delete:
-        column_names = flatten(args.delete)
-        df = pd.read_csv(args.input_file, sep='\t', index_col=0)
-        print(tabutil.core.remove_columns(df, *column_names))
+    elif args.drop or args.drop_spec:
+        if args.drop_spec:
+            column_names = read_spec(args.drop_spec)
+        else:
+            column_names = flatten(args.drop)
 
-    elif args.rename:
-        rename_pair = flatten(args.rename)
-        rename_pair =  [(p.split(':')[0], p.split(':')[1]) for p in rename_pair]
-        df = pd.read_csv(args.input_file, sep='\t', index_col=0)
+        print(tabutil.core.drop_columns(df, *column_names))
+
+    elif args.rename or args.rename_spec:
+        if args.rename_spec:
+            rename_pair = read_spec(args.rename_spec)
+        else:
+            rename_pair = flatten(args.rename)
+
+        rename_pair = [(p.split(':')[0], p.split(':')[1]) for p in rename_pair]
+
         print(tabutil.core.replace_column_headers(df, *rename_pair))
 
 def subcommand_row(args):
-    if args.extract:
-        column_value_pair = flatten(args.extract)
-        column_value_pair =  [(p.split(':')[0], p.split(':')[1]) for p in column_value_pair]
-        df = pd.read_csv(args.input_file, sep='\t', index_col=0)
-        print(tabutil.core.extract_rows(df, column_value_pair[0][0], column_value_pair[0][1]))
+    df = pd.read_csv(args.input_file, sep='\t', index_col=0)
+    df.applymap(str)
 
-    elif args.delete:
-        row_ids = flatten(args.delete)
-        df = pd.read_csv(args.input_file, sep='\t', index_col=0)
+    if args.extract_match:
+        column_value_pair = flatten(args.extract_match)
+        column_value_pair =  [(p.split(':')[0], p.split(':')[1]) for p in column_value_pair]
+        print(tabutil.core.extract_rows_match(df, column_value_pair[0][0], column_value_pair[0][1]))
+
+    elif args.extract:
+        row_ids = flatten(args.extract)
+        print(tabutil.core.extract_rows(df, *row_ids))
+
+    elif args.drop:
+        row_ids = flatten(args.drop)
         print(tabutil.core.remove_rows(df, *row_ids))
 
     elif args.rename:
         rename_pair = flatten(args.rename)
         rename_pair =  [(p.split(':')[0], p.split(':')[1]) for p in rename_pair]
-        df = pd.read_csv(args.input_file, sep='\t', index_col=0)
         print(tabutil.core.replace_row_ids(df, *rename_pair))
 
 def main():
 
-    parser = argparse.ArgumentParser('tabutil')
+    parser = argparse.ArgumentParser('tabutil',
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     subparsers = parser.add_subparsers(help='sub-command help')
 
@@ -66,30 +89,47 @@ def main():
     col_parser = subparsers.add_parser('col', help='col --help')
     col_parser.set_defaults(func=subcommand_col)
 
-    col_parser.add_argument('--extract', type=custom_parser_comma, action='append',
-                            metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract')
+    col_parser_extract = col_parser.add_mutually_exclusive_group()
 
-    col_parser.add_argument('--delete', type=custom_parser_comma, action='append',
-                            metavar='COLUMN_NAME[,COLUMN_NAME]', dest='delete')
+    col_parser_extract.add_argument('--extract', type=custom_parser_comma, action='append',
+                                    metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract')
 
-    col_parser.add_argument('--rename', type=custom_parser_comma, action='append',
-                            metavar='COLUMN_NAME[,COLUMN_NAME]', dest='rename')
+    col_parser_extract.add_argument('--extract-spec', dest='extract_spec')
+
+    col_parser_drop = col_parser.add_mutually_exclusive_group()
+
+    col_parser_drop.add_argument('--drop', type=custom_parser_comma, action='append',
+                            metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop')
+
+    col_parser_drop.add_argument('--drop-spec', dest='drop_spec')
+
+    col_parser_rename = col_parser.add_mutually_exclusive_group()
+
+    col_parser_rename.add_argument('--rename', type=custom_parser_comma, action='append',
+                            metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename')
+
+    col_parser_rename.add_argument('--rename-spec', dest='rename_spec')
 
     col_parser.add_argument('input_file')
+
 
     #-----------------------------------------------------------------------------------------
 
     row_parser = subparsers.add_parser('row', help='row --help')
     row_parser.set_defaults(func=subcommand_row)
 
-    row_parser.add_argument('--extract', type=custom_parser_comma, action='append',
-                            metavar='COLUMN_NAME:VALUE', dest='extract')
+    row_parser.add_argument('--extract-match', type=custom_parser_comma, action='append',
+                            metavar='COLUMN_NAME:VALUE', dest='extract_match')
 
-    row_parser.add_argument('--delete', type=custom_parser_comma, action='append',
-                            metavar='ROW_ID[,ROW_ID]', dest='delete')
+    row_parser.add_argument('--extract', type=custom_parser_comma, action='append',
+                            metavar='ROW_ID[,ROW_ID...]', dest='extract')
+
+
+    row_parser.add_argument('--drop', type=custom_parser_comma, action='append',
+                            metavar='ROW_ID[,ROW_ID...]', dest='drop')
 
     row_parser.add_argument('--rename', type=custom_parser_comma, action='append',
-                            metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID]', dest='rename')
+                            metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename')
 
     row_parser.add_argument('input_file')
 

@@ -1,10 +1,14 @@
 def extract_columns(df, *columns):
     return(df.loc[:, columns].to_csv(sep='\t'))
 
-def extract_rows(df, column_name, value):
-    return(df.loc[df[column_name] == value].to_csv(sep='\t'))
+def extract_rows(df, *row_ids):
+    separator='\t'
+    return(df.filter(items=row_ids, axis='index').to_csv(sep=separator))
 
-def remove_columns(df, *column_names):
+def extract_rows_match(df, column_name, value):
+    return(df.loc[df[column_name] == str(value)].to_csv(sep='\t'))
+
+def drop_columns(df, *column_names):
     for column_name in column_names:
         df.drop(column_name, axis=1, inplace=True)
     return(df.to_csv(sep='\t'))

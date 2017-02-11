@@ -45,8 +45,8 @@ class TestTabUtil(unittest.TestCase):
 
         assert_equals(result, expected)
 
-    def test_extract_rows(self):
-        result = tabutil.core.extract_rows(self.df, 'Teddy2', 'apple')
+    def test_extract_rows_match(self):
+        result = tabutil.core.extract_rows_match(self.df, 'Teddy2', 'apple')
 
         expected = create_csv(
             [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
@@ -56,8 +56,19 @@ class TestTabUtil(unittest.TestCase):
 
         assert_equals(result, expected)
 
-    def test_remove_columns(self):
-        result = tabutil.core.remove_columns(self.df, 'Teddy1', 'Teddy3')
+    def test_extract_rows(self):
+        result = tabutil.core.extract_rows(self.df, 'TXNIP', 'GCL6')
+
+        expected = create_csv(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
+            [ 'TXNIP', '42',     'apple',  '29'     ],
+            [ 'GCL6',  '56',     'baker',  '99'     ],
+        )
+
+        assert_equals(result, expected)
+
+    def test_drop_columns(self):
+        result = tabutil.core.drop_columns(self.df, 'Teddy1', 'Teddy3')
 
         expected = create_csv(
             [ 'ID',    'Teddy2' ],
@@ -106,5 +117,3 @@ class TestTabUtil(unittest.TestCase):
         )
 
         assert_equals(result, expected)
-
-

@@ -1,15 +1,29 @@
 #!/usr/bin/env bash
-#
-#------------------------------------------------------------------------------------
-# To activate virtualenv type from the command line:
-#
-#   $ source <(bin/venv --bash)
-#------------------------------------------------------------------------------------
 
 set -eo pipefail
 
 MYSELF=$0
 BASE=$(readlink -f $(dirname ${MYSELF})/..)
+
+VIRTUALENV_PATHS="
+${VIRTUALENV_PATHS}
+/shares/hii/sw/python/2.7.12/bin/python2.7
+/opt/python-2.7.9/bin/python2.7
+/opt/hii/python-2.7.10/bin/python2.7
+/usr/bin/python2.7
+"
+
+set_virtualenv_default() {
+  local path
+  for path in ${VIRTUALENV_PATHS}; do
+    if [[ -x ${path} ]]; then
+      VIRTUALENV=$(dirname ${path})/virtualenv
+      [[ -x ${VIRTUALENV} ]] && break
+    fi
+  done
+}
+
+[[ -z ${VIRTUALENV} ]] && set_virtualenv_default
 
 venv=${VENV_DIR:-${BASE}/.venv}
 
@@ -24,7 +38,7 @@ fi
 
 if [[ ! -d ${venv} ]]; then
   echo
-  echo ${VENV:-virtualenv} ${venv} | /bin/bash -x
+  echo ${VIRTUALENV} ${venv} | /bin/bash -x
 
   echo
   echo ${venv}/bin/pip install --upgrade pip | /bin/bash -x
