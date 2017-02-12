@@ -11,6 +11,10 @@ def column_rename(df, *rename_pairs):
         df.rename(columns={rename_pair[0]: rename_pair[1]}, inplace=True)
     return(df.to_csv(sep='\t'))
 
+def column_append(df, df2):
+    appended_df = df.join(df2, how='outer')
+    return(appended_df.to_csv(sep='\t'))
+
 def row_extract(df, *row_ids):
     separator='\t'
     return(df.filter(items=row_ids, axis='index').to_csv(sep=separator))
@@ -27,3 +31,4 @@ def row_rename(df, *rename_pairs):
     for rename_pair in rename_pairs:
         df.rename(index={rename_pair[0]: rename_pair[1]}, inplace=True)
     return(df.to_csv(sep='\t'))
+

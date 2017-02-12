@@ -30,7 +30,24 @@ class TestTabUtil(unittest.TestCase):
             [ 'INS',   '3',      'echo',   '54'     ]
         )
 
-        self.df = pd.read_csv(input_file, sep='\t', index_col=0)
+        input_file_b = create_input_file(
+            [ 'ID',    'Teddy4', 'Teddy5', 'Teddy6' ],
+            [ 'TXNIP', '70',     'grape',   '60' ],
+            [ 'GCL6',  '30',     'orange',  '10' ],
+            [ 'GOS2',  '50',     'zulu',    '90' ]
+        )
+
+        input_file_c = create_input_file(
+            [ 'ID', 'Teddy4',  'Teddy5', 'Teddy6' ],
+            [ 'XYZ', '70',     'grape', '60' ],
+            [ 'ABC', '30',     'orange', '10' ],
+            [ 'GEF', '50',     'zulu',   '90' ]
+        )
+
+
+        self.df = pd.read_csv(input_file, sep='\t', index_col=0, dtype=str)
+        self.df_b = pd.read_csv(input_file_b, sep='\t', index_col=0, dtype=str)
+        self.df_c = pd.read_csv(input_file_c, sep='\t', index_col=0, dtype=str)
 
     def test_column_extract(self):
         result = tabutil.core.column_extract(self.df, 'Teddy1', 'Teddy3')
@@ -117,3 +134,18 @@ class TestTabUtil(unittest.TestCase):
         )
 
         assert_equals(result, expected)
+
+    def test_col_append(self):
+        result = tabutil.core.column_append(self.df, self.df_b)
+
+        expected = create_csv(
+                       [ 'ID',       'Teddy1',    'Teddy2',    'Teddy3',  'Teddy4',    'Teddy5',    'Teddy6' ],
+                       [ 'GCL6',     '56',        'baker',     '99',      '30',        'orange',    '10'     ],
+                       [ 'GOS2',     '77',        'apple',     '100',     '50',        'zulu',      '90'     ],
+                       [ 'INS',      '3',         'echo',      '54',      '',          '',          ''       ],
+                       [ 'TXNIP',    '42',        'apple',     '29',      '70',        'grape',     '60'     ],
+                   )
+
+        assert_equals(result, expected)
+
+

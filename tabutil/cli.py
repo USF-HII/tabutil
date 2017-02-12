@@ -26,10 +26,13 @@ def read_spec(filename):
 
 def subcommand_col(args):
     separator = '\t'
-    df = pd.read_csv(args.input_file, sep=separator, index_col=0)
-    df.applymap(str)
+    df = pd.read_csv(args.input_file, sep=separator, index_col=0, dtype=str)
 
-    if args.extract:
+    if args.append:
+        df2 = pd.read_csv(args.append, sep=separator, index_col=0, dtype=str)
+        print(tabutil.core.column_append(df, df2))
+
+    elif args.extract:
         if args.spec:
             column_names = read_spec(args.spec)
         else:
@@ -105,6 +108,8 @@ def main():
 
     col = subparsers.add_parser('col', help='col --help')
     col.set_defaults(func=subcommand_col)
+
+    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append')
 
     col.add_argument('--extract', type=custom_parser_comma, action='append',
                                   metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract')
