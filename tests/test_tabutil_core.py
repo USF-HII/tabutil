@@ -147,3 +147,19 @@ class TestTabUtil(unittest.TestCase):
         )
 
         assert_equals(result, expected)
+
+    def test_row_append(self):
+        result = tabutil.core.row_append(self.df, self.df_c)
+
+        expected = create_csv(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3', 'Teddy4',  'Teddy5',  'Teddy6' ],
+            [ 'ABC',   '',       '',       '',       '30',      'orange',  '10'     ],
+            [ 'GCL6',  '56',     'baker',  '99',     '',        '',        ''       ],
+            [ 'GEF',   '',       '',       '',       '50',      'zulu',    '90'     ],
+            [ 'GOS2',  '77',     'apple',  '100',    '',        '',        ''       ],
+            [ 'INS',   '3',      'echo',   '54',     '',        '',        ''       ],
+            [ 'TXNIP', '42',     'apple',  '29',     '',        '',        ''       ],
+            [ 'XYZ',   '',       '',       '',       '70',      'grape',   '60'     ],
+        )
+
+        assert_equals(result, expected)

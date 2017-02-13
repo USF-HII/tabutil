@@ -9,7 +9,12 @@ unit:
 cli: install
 	@echo
 	@echo "--------------------------------------------------------------------------------"
-	head tests/data/tabutil*.tsv
+	head tests/data/tabutil.tsv
+	head tests/data/tabutil-b.tsv
+	head tests/data/col-extract-spec.txt
+	@echo
+	@echo "--------------------------------------------------------------------------------"
+	bin/venv tabutil col --extract --spec tests/data/col-extract-spec.txt tests/data/tabutil.tsv
 	@echo
 	@echo "--------------------------------------------------------------------------------"
 	bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
@@ -34,3 +39,6 @@ cli: install
 	@echo
 	@echo "--------------------------------------------------------------------------------"
 	bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+	@echo
+	@echo "--------------------------------------------------------------------------------"
+	bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv

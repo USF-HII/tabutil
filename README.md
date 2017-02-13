@@ -28,113 +28,203 @@ For `tabutil row --extract=apple:baker,charlie:delta`:
     apple:baker
     charlie:delta
 
-## Examples
-
-All examples use the following tab-separated input file `test.tsv`:
-
-    ID       Teddy1    Teddy2    Teddy3
-    TXNIP    42        apple     29
-    GCL6     56        baker     99
-    GOS2     77        apple     100
-    INS      3         echo      54
-
-For the `col --append` option a second file `test-b.tsv` is:
-
-    ID       Teddy4    Teddy5    Teddy6
-    TXNIP    70        grape     60
-    GCL6     30        orange    10
-    GOS2     50        zulu      90
-
-For the `row --append` option a second file `test-c.tsv` is:
-
-    ID       Teddy4    Teddy5    Teddy6
-    XYZ      70        grape     60
-    ABC      30        orange    10
-    GEF      50        zulu      90
-
-### extract Columns
-
-    tabutil col --extract=Teddy1,Teddy3 test.tsv
-
-    ID        Teddy1   Teddy3
-    TXNIP     42       29
-    GCL6      56       99
-    GOS2      77       100
-    INS       3        54
-
-### Remove Columns
-
-    tabutil col --remove=Teddy1,Teddy3 test.tsv
-
-    ID       Teddy2
-    TXNIP    apple
-    GCL6     baker
-    GOS2     apple
-    INS      echo
-
-### Rename Column Headers
-
-    tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB test.tsv
-
-    ID       TeddyA    TeddyB    Teddy3
-    TXNIP    42        apple     29
-    GCL6     56        baker     99
-    GOS2     77        apple     100
-    INS      3         echo      54
+## Example Suite
 
 
-### extract Rows with Column Value
+```
+--------------------------------------------------------------------------------
+head tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GCL6	56	baker	99
+GOS2	77	apple	100
+INS	3	echo	54
+head tests/data/tabutil-b.tsv
+ID	Teddy4	Teddy5	Teddy6
+TXNIP	70	grape	60
+GCL6	30	orange	10
+GOS2	50	zulu	90
+head tests/data/col-extract-spec.txt
+Teddy1
+Teddy2
 
-    tabutil row --extract=Teddy2:apple test.tsv
+--------------------------------------------------------------------------------
+bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
+ID	Teddy2	Teddy3
+TXNIP	apple	29
+GCL6	baker	99
+GOS2	apple	100
+INS	echo	54
 
-    ID       Teddy1    Teddy2    Teddy3
-    TXNIP    42        apple     29
-    GOS2     77        apple     100
 
-### Remove Rows
+--------------------------------------------------------------------------------
+bin/venv tabutil col --extract --spec tests/data/col-extract-spec.txt tests/data/tabutil.tsv
+ID	Teddy1	Teddy2
+TXNIP	42	apple
+GCL6	56	baker
+GOS2	77	apple
+INS	3	echo
 
-    tabutil row --remove=GCL6,TXNIP test.tsv
 
-    ID       Teddy1    Teddy2    Teddy3
-    GOS2     77        apple     100
-    INS      3         echo      54
+--------------------------------------------------------------------------------
+bin/venv tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
+ID	Teddy1
+TXNIP	42
+GCL6	56
+GOS2	77
+INS	3
 
-### Rename Rows
 
-    tabutil row --rename=TXNIP:FOO,GCL6:BOO test.tsv
+--------------------------------------------------------------------------------
+bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GCL6	56	baker	99
+GOS2	77	apple	100
+INS	3	echo	54
 
-    ID       Teddy1    Teddy2    Teddy3
-    FOO      42        apple     29
-    BOO      56        baker     99
-    GOS2     77        apple     100
-    INS      3         echo      54
 
-### Append Columns
+--------------------------------------------------------------------------------
+bin/venv tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3	Teddy4	Teddy5	Teddy6
+GCL6	56	baker	99	30	orange	10
+GOS2	77	apple	100	50	zulu	90
+INS	3	echo	54
+TXNIP	42	apple	29	70	grape	60
 
-*Note: All column names in each file must be unique.*
 
-    tabutil col --append=test-b.tsv test.tsv
+--------------------------------------------------------------------------------
+bin/venv tabutil row --extract=GCL6 tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+GCL6	56	baker	99
 
-    All examples use the following tab-separated input file `test.tsv`:
 
-        ID       Teddy1    Teddy2    Teddy3  Teddy4    Teddy5    Teddy6
-        TXNIP    42        apple     29      70        grape     60
-        GCL6     56        baker     99      30        orange    10
-        GOS2     77        apple     100     50        zulu      90
-        INS      3         echo      54
+--------------------------------------------------------------------------------
+bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GOS2	77	apple	100
 
-### Append Rows
 
-*Note: All row ids in each file must be unique.*
+--------------------------------------------------------------------------------
+bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GOS2	77	apple	100
+INS	3	echo	54
 
-    tabutil row --append=test-c.tsv test.tsv
 
-    ID       Teddy1    Teddy2    Teddy3   Teddy4    Teddy5    Teddy6
-    TXNIP    42        apple     29
-    GCL6     56        baker     99
-    GOS2     77        apple     100
-    INS      3         echo      54
-    XYZ                                   70        grape     60
-    ABC                                   30        orange    10
-    GEF                                   50        zulu      90
+--------------------------------------------------------------------------------
+bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+FOO	56	baker	99
+GOS2	77	apple	100
+INS	3	echo	54
+
+```
+bin/venv nosetests --verbose tests
+bin/venv python setup.py install --force &>/dev/null
+
+--------------------------------------------------------------------------------
+head tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GCL6	56	baker	99
+GOS2	77	apple	100
+INS	3	echo	54
+head tests/data/tabutil-b.tsv
+ID	Teddy4	Teddy5	Teddy6
+TXNIP	70	grape	60
+GCL6	30	orange	10
+GOS2	50	zulu	90
+head tests/data/col-extract-spec.txt
+Teddy1
+Teddy2
+
+--------------------------------------------------------------------------------
+bin/venv tabutil col --extract --spec tests/data/col-extract-spec.txt tests/data/tabutil.tsv
+ID	Teddy1	Teddy2
+TXNIP	42	apple
+GCL6	56	baker
+GOS2	77	apple
+INS	3	echo
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
+ID	Teddy2	Teddy3
+TXNIP	apple	29
+GCL6	baker	99
+GOS2	apple	100
+INS	echo	54
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
+ID	Teddy1
+TXNIP	42
+GCL6	56
+GOS2	77
+INS	3
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GCL6	56	baker	99
+GOS2	77	apple	100
+INS	3	echo	54
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3	Teddy4	Teddy5	Teddy6
+GCL6	56	baker	99	30	orange	10
+GOS2	77	apple	100	50	zulu	90
+INS	3	echo	54			
+TXNIP	42	apple	29	70	grape	60
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil row --extract=GCL6 tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+GCL6	56	baker	99
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GOS2	77	apple	100
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+GOS2	77	apple	100
+INS	3	echo	54
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3
+TXNIP	42	apple	29
+FOO	56	baker	99
+GOS2	77	apple	100
+INS	3	echo	54
+
+
+--------------------------------------------------------------------------------
+bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
+ID	Teddy1	Teddy2	Teddy3	Teddy4	Teddy5	Teddy6
+ABC				30	orange	10
+GCL6	56	baker	99			
+GEF				50	zulu	90
+GOS2	77	apple	100			
+INS	3	echo	54			
+TXNIP	42	apple	29			
+XYZ				70	grape	60
 

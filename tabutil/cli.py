@@ -59,8 +59,7 @@ def subcommand_col(args):
         print(tabutil.core.column_rename(df, rename_pairs))
 
 def subcommand_row(args):
-    df = pd.read_csv(args.input_file, sep='\t', index_col=0)
-    df.applymap(str)
+    df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
 
     if args.extract:
         if args.spec:
@@ -69,6 +68,13 @@ def subcommand_row(args):
             row_ids = flatten(args.extract)
 
         print(tabutil.core.row_extract(df, *row_ids))
+
+    elif args.append:
+        df2 = pd.read_csv(args.append, sep='\t', index_col=0, dtype=str)
+        #print("====")
+        #print(df.to_csv(sep='\t'))
+        #print(df2.to_csv(sep='\t'))
+        print(tabutil.core.row_append(df, df2))
 
     elif args.extract_match:
         if args.spec:
@@ -110,7 +116,7 @@ def main():
     col = subparsers.add_parser('col', help='col --help')
     col.set_defaults(func=subcommand_col)
 
-    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append', nargs='?', default=[])
+    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append')
 
     col.add_argument('--extract', type=custom_parser_comma, action='append',
                                   metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', nargs='?', default=[])
@@ -141,6 +147,8 @@ def main():
 
     row.add_argument('--rename', type=custom_parser_comma, action='append',
                                  metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', nargs='?', default=[])
+
+    row.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append')
 
     row.add_argument('--spec', dest='spec')
 
