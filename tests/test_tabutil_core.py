@@ -2,14 +2,14 @@
 from test_helper import *
 
 # Utility libraries
-import StringIO
+import io
 import sys
 
 # Class/Module Under Test
 import tabutil.core
 
 def create_input_file(*rows):
-    f = StringIO.StringIO()
+    f = io.StringIO()
     for row in rows:
         f.write('\t'.join(row) + '\n')
     f.seek(0)
@@ -59,6 +59,19 @@ class TestTabUtil(unittest.TestCase):
             [ 'GOS2',  '77',     '100' ],
             [ 'INS',   '3',      '54' ]
         )
+
+        assert_equals(result, expected)
+
+    def test_col_append(self):
+        result = tabutil.core.column_append(self.df, self.df_b)
+
+        expected = create_csv(
+                       [ 'ID',       'Teddy1',    'Teddy2',    'Teddy3',  'Teddy4',    'Teddy5',    'Teddy6' ],
+                       [ 'GCL6',     '56',        'baker',     '99',      '30',        'orange',    '10'     ],
+                       [ 'GOS2',     '77',        'apple',     '100',     '50',        'zulu',      '90'     ],
+                       [ 'INS',      '3',         'echo',      '54',      '',          '',          ''       ],
+                       [ 'TXNIP',    '42',        'apple',     '29',      '70',        'grape',     '60'     ],
+                   )
 
         assert_equals(result, expected)
 
@@ -123,7 +136,7 @@ class TestTabUtil(unittest.TestCase):
         assert_equals(result, expected)
 
     def test_row_rename(self):
-        result = tabutil.core.row_rename(self.df, ('TXNIP', 'FOO'))
+        result = tabutil.core.row_rename(self.df, [('TXNIP', 'FOO')])
 
         expected =  create_csv(
             [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
@@ -134,18 +147,3 @@ class TestTabUtil(unittest.TestCase):
         )
 
         assert_equals(result, expected)
-
-    def test_col_append(self):
-        result = tabutil.core.column_append(self.df, self.df_b)
-
-        expected = create_csv(
-                       [ 'ID',       'Teddy1',    'Teddy2',    'Teddy3',  'Teddy4',    'Teddy5',    'Teddy6' ],
-                       [ 'GCL6',     '56',        'baker',     '99',      '30',        'orange',    '10'     ],
-                       [ 'GOS2',     '77',        'apple',     '100',     '50',        'zulu',      '90'     ],
-                       [ 'INS',      '3',         'echo',      '54',      '',          '',          ''       ],
-                       [ 'TXNIP',    '42',        'apple',     '29',      '70',        'grape',     '60'     ],
-                   )
-
-        assert_equals(result, expected)
-
-

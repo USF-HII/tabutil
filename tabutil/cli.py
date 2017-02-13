@@ -50,13 +50,13 @@ def subcommand_col(args):
 
     elif args.rename:
         if args.spec:
-            rename_pair = read_spec(args.spec)
+            rename_pairs = read_spec(args.spec)
         else:
-            rename_pair = flatten(args.rename)
+            rename_pairs = flatten(args.rename)
 
-        rename_pair = [(p.split(':')[0], p.split(':')[1]) for p in rename_pair]
+        rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
 
-        print(tabutil.core.column_rename(df, *rename_pair))
+        print(tabutil.core.column_rename(df, rename_pairs))
 
 def subcommand_row(args):
     df = pd.read_csv(args.input_file, sep='\t', index_col=0)
@@ -90,12 +90,12 @@ def subcommand_row(args):
 
     elif args.rename:
         if args.spec:
-            rename_pair = read_spec(args.spec)
+            rename_pairs = read_spec(args.spec)
         else:
-            rename_pair = flatten(args.rename)
+            rename_pairs = flatten(args.rename)
 
-        rename_pair =  [(p.split(':')[0], p.split(':')[1]) for p in rename_pair]
-        print(tabutil.core.row_rename(df, *rename_pair))
+        rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
+        print(tabutil.core.row_rename(df, rename_pairs))
 
 def main():
 
@@ -103,22 +103,23 @@ def main():
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     subparsers = parser.add_subparsers(help='sub-command help')
+    subparsers.required = True
 
     #-----------------------------------------------------------------------------------------
 
     col = subparsers.add_parser('col', help='col --help')
     col.set_defaults(func=subcommand_col)
 
-    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append')
+    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append', defaultl=[])
 
     col.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract')
+                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', default=[])
 
     col.add_argument('--drop', type=custom_parser_comma, action='append',
-                               metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop')
+                               metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop', default=[])
 
     col.add_argument('--rename', type=custom_parser_comma, action='append',
-                                 metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename')
+                                 metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', default=[])
 
     col.add_argument('--spec', dest='spec')
 
@@ -130,16 +131,16 @@ def main():
     row.set_defaults(func=subcommand_row)
 
     row.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='ROW_ID[,ROW_ID...]', dest='extract')
+                                  metavar='ROW_ID[,ROW_ID...]', dest='extract', default=[])
 
     row.add_argument('--extract-match', type=custom_parser_comma, action='append',
-                                        metavar='COLUMN_NAME:VALUE[,COLUMN_NAME:VALUE...]', dest='extract_match')
+                                        metavar='COLUMN_NAME:VALUE[,COLUMN_NAME:VALUE...]', dest='extract_match', default=[])
 
     row.add_argument('--drop', type=custom_parser_comma, action='append',
-                               metavar='ROW_ID[,ROW_ID...]', dest='drop')
+                               metavar='ROW_ID[,ROW_ID...]', dest='drop', default=[])
 
     row.add_argument('--rename', type=custom_parser_comma, action='append',
-                                 metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename')
+                                 metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', default=[])
 
     row.add_argument('--spec', dest='spec')
 
@@ -147,7 +148,10 @@ def main():
 
     #-----------------------------------------------------------------------------------------
 
-    args = parser.parse_args(sys.argv[1:])
-
-    args.func(args)
+    if len(sys.argv) > 1:
+        args = parser.parse_args(sys.argv[1:])
+        args.func(args)
+    else:
+        parser.print_help()
+        sys.exit(1)
 

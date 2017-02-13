@@ -7,17 +7,16 @@ BASE=$(readlink -f $(dirname ${MYSELF})/..)
 
 VIRTUALENV_PATHS="
 ${VIRTUALENV_PATHS}
-/shares/hii/sw/python/2.7.12/bin/python2.7
-/opt/python-2.7.9/bin/python2.7
-/opt/hii/python-2.7.10/bin/python2.7
-/usr/bin/python2.7
+/opt/hii/python/3.5.3/bin/python3.5
+/usr/local/bin/python3.5
+/usr/bin/python3.5
 "
 
 set_virtualenv_default() {
   local path
   for path in ${VIRTUALENV_PATHS}; do
     if [[ -x ${path} ]]; then
-      VIRTUALENV=$(dirname ${path})/virtualenv
+      VIRTUALENV=$(dirname ${path})/pyvenv
       [[ -x ${VIRTUALENV} ]] && break
     fi
   done
@@ -50,12 +49,14 @@ if [[ ! -d ${venv} ]]; then
 fi
 
 if [[ $# -lt 1 ]]; then
-  echo "Usage: ${MYSELF} [-r|--reset] bash|ARGS..." 2>&1
+  echo "Usage: ${MYSELF} [-r|--reset] bash|eval|ARGS..." 2>&1
   exit 1
 fi
 
 if [[ $1 == 'bash' ]]; then
   bash --init-file <(echo "[[ -f $HOME/.bash_profile ]] && source $HOME/.bash_profile; source ${venv}/bin/activate;")
+elif [[ $1 == 'eval' ]]; then
+  echo "source ${venv}/bin/activate"
 else
   source ${venv}/bin/activate
   "$@"

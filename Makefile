@@ -1,15 +1,15 @@
 all: unit cli
 
+install:
+	bin/venv python setup.py install --force &>/dev/null
+
 unit:
 	bin/venv nosetests --verbose tests
 
-cli:
+cli: install
 	@echo
 	@echo "--------------------------------------------------------------------------------"
 	head tests/data/tabutil*.tsv
-	@echo
-	@echo "--------------------------------------------------------------------------------"
-	bin/venv python setup.py install --force &>/dev/null
 	@echo
 	@echo "--------------------------------------------------------------------------------"
 	bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
@@ -33,4 +33,4 @@ cli:
 	bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
 	@echo
 	@echo "--------------------------------------------------------------------------------"
-	bin/venv tabutil row --rename=GLC6:FOO tests/data/tabutil.tsv
+	bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv

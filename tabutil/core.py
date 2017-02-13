@@ -27,7 +27,7 @@ def row_drop(df, *row_ids):
         df.drop(row_id, inplace=True)
     return(df.to_csv(sep='\t'))
 
-def row_rename(df, *rename_pairs):
+def row_rename(df, rename_pairs):
     for rename_pair in rename_pairs:
         df.rename(index={rename_pair[0]: rename_pair[1]}, inplace=True)
     return(df.to_csv(sep='\t'))
