@@ -10,7 +10,11 @@ cli: install
 	@echo
 	@echo "--------------------------------------------------------------------------------"
 	head tests/data/tabutil.tsv
+	@echo
 	head tests/data/tabutil-b.tsv
+	@echo
+	head tests/data/tabutil-c.tsv
+	@echo
 	head tests/data/col-extract-spec.txt
 	@echo
 	@echo "--------------------------------------------------------------------------------"
