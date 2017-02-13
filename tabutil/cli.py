@@ -103,6 +103,19 @@ def subcommand_row(args):
         rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
         print(tabutil.core.row_rename(df, rename_pairs))
 
+def subcommand_cell(args):
+    df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
+
+    if args.replace:
+        if args.spec:
+            changesets = read_spec(args.spec)
+        else:
+            changesets = flatten(args.replace)
+
+        changesets = [(c.split(':')[0], c.split(':')[1]) for c in changesets]
+        print(tabutil.core.cell_replace(df, changesets))
+
+
 def main():
 
     parser = argparse.ArgumentParser('tabutil',
@@ -153,6 +166,18 @@ def main():
     row.add_argument('--spec', dest='spec')
 
     row.add_argument('input_file')
+
+    #-----------------------------------------------------------------------------------------
+
+    cell = subparsers.add_parser('cell', help='cell --help')
+    cell.set_defaults(func=subcommand_cell)
+
+    cell.add_argument('--replace', type=custom_parser_comma, action='append',
+                                    metavar='OLD_VALUE:NEW_VALUE[,OLD_VALUE:NEW_VALUE...]', dest='replace', nargs='?', default=[])
+
+    cell.add_argument('--spec', dest='spec')
+
+    cell.add_argument('input_file')
 
     #-----------------------------------------------------------------------------------------
 

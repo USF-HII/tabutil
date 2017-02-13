@@ -46,3 +46,6 @@ cli: install
 	@echo
 	@echo "--------------------------------------------------------------------------------"
 	bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv | expand -t10
+	@echo
+	@echo "--------------------------------------------------------------------------------"
+	bin/venv tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv | expand -t10

@@ -39,4 +39,9 @@ def row_append(df1, df2):
     df.index.name = df1.index.name
     return(df.to_csv(sep='\t'))
 
+def cell_replace(df, changesets):
+    for changeset in changesets:
+        df.replace(changeset[0], changeset[1], inplace=True)
+    return df.to_csv(sep='\t')
+
 

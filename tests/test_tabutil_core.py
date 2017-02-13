@@ -44,7 +44,6 @@ class TestTabUtil(unittest.TestCase):
             [ 'GEF', '50',     'zulu',   '90' ]
         )
 
-
         self.df = pd.read_csv(input_file, sep='\t', index_col=0, dtype=str)
         self.df_b = pd.read_csv(input_file_b, sep='\t', index_col=0, dtype=str)
         self.df_c = pd.read_csv(input_file_c, sep='\t', index_col=0, dtype=str)
@@ -160,6 +159,19 @@ class TestTabUtil(unittest.TestCase):
             [ 'INS',   '3',      'echo',   '54',     '',        '',        ''       ],
             [ 'TXNIP', '42',     'apple',  '29',     '',        '',        ''       ],
             [ 'XYZ',   '',       '',       '',       '70',      'grape',   '60'     ],
+        )
+
+        assert_equals(result, expected)
+
+    def test_cell_replace(self):
+        result = tabutil.core.cell_replace(self.df, [('42', '2000'),('apple', 'eggplant')])
+
+        expected =  create_csv(
+            [ 'ID',    'Teddy1', 'Teddy2',    'Teddy3' ],
+            [ 'TXNIP', '2000',   'eggplant',  '29'     ],
+            [ 'GCL6',  '56',     'baker',     '99'     ],
+            [ 'GOS2',  '77',     'eggplant',  '100'    ],
+            [ 'INS',   '3',      'echo',      '54'     ]
         )
 
         assert_equals(result, expected)
