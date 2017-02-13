@@ -110,16 +110,16 @@ def main():
     col = subparsers.add_parser('col', help='col --help')
     col.set_defaults(func=subcommand_col)
 
-    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append', defaultl=[])
+    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append', nargs='?', default=[])
 
     col.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', default=[])
+                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', nargs='?', default=[])
 
     col.add_argument('--drop', type=custom_parser_comma, action='append',
-                               metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop', default=[])
+                               metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop', nargs='?', default=[])
 
     col.add_argument('--rename', type=custom_parser_comma, action='append',
-                                 metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', default=[])
+                                 metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', nargs='?', default=[])
 
     col.add_argument('--spec', dest='spec')
 
@@ -131,16 +131,16 @@ def main():
     row.set_defaults(func=subcommand_row)
 
     row.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='ROW_ID[,ROW_ID...]', dest='extract', default=[])
+                                  metavar='ROW_ID[,ROW_ID...]', dest='extract', nargs='?', default=[])
 
     row.add_argument('--extract-match', type=custom_parser_comma, action='append',
-                                        metavar='COLUMN_NAME:VALUE[,COLUMN_NAME:VALUE...]', dest='extract_match', default=[])
+                                        metavar='COLUMN_NAME:VALUE[,COLUMN_NAME:VALUE...]', nargs='?', dest='extract_match', default=[])
 
     row.add_argument('--drop', type=custom_parser_comma, action='append',
-                               metavar='ROW_ID[,ROW_ID...]', dest='drop', default=[])
+                               metavar='ROW_ID[,ROW_ID...]', dest='drop', nargs='?', default=[])
 
     row.add_argument('--rename', type=custom_parser_comma, action='append',
-                                 metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', default=[])
+                                 metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', nargs='?', default=[])
 
     row.add_argument('--spec', dest='spec')
 
