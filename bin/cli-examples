@@ -24,29 +24,24 @@ run head tests/data/col-extract-spec.txt
 
 border
 
-run bin/venv tabutil row --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
-run bin/venv tabutil row --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
-run bin/venv tabutil row --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
-run bin/venv tabutil row --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
-
-run bin/venv tabutil col --extract --spec tests/data/col-extract-spec.txt tests/data/tabutil.tsv
-
-run bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
-
-run bin/venv tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
-
-run bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
-
 run bin/venv tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
-
-run bin/venv tabutil row --extract=GCL6 tests/data/tabutil.tsv
-
-run bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
-
-run bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
-
-run bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+run bin/venv tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
+run bin/venv tabutil col --extract --spec tests/data/col-extract-spec.txt tests/data/tabutil.tsv
+run bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
+run bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
+run bin/venv tabutil col --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
+run bin/venv tabutil col --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
+run bin/venv tabutil col --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
+run bin/venv tabutil col --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
 
 run bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
+run bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
+run bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
+run bin/venv tabutil row --extract=GCL6 tests/data/tabutil.tsv
+run bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+run bin/venv tabutil row --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
+run bin/venv tabutil row --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
+run bin/venv tabutil row --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
+run bin/venv tabutil row --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
 
 run bin/venv tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv

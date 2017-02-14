@@ -57,6 +57,22 @@ def subcommand_col(args):
 
         print(tabutil.core.column_rename(df, rename_pairs))
 
+    elif args.set_intersect:
+        df2 = pd.read_csv(args.set_intersect, sep='\t', index_col=0, dtype=str)
+        print('\n'.join(tabutil.core.set_intersect(df, df2, 'column')))
+
+    elif args.set_union:
+        df2 = pd.read_csv(args.set_union, sep='\t', index_col=0, dtype=str)
+        print('\n'.join(tabutil.core.set_union(df, df2, 'column')))
+
+    elif args.set_diff:
+        df2 = pd.read_csv(args.set_diff, sep='\t', index_col=0, dtype=str)
+        print('\n'.join(tabutil.core.set_diff(df, df2, 'column')))
+
+    elif args.set_sym_diff:
+        df2 = pd.read_csv(args.set_sym_diff, sep='\t', index_col=0, dtype=str)
+        print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'column')))
+
 def subcommand_row(args):
     df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
 
@@ -101,19 +117,19 @@ def subcommand_row(args):
 
     elif args.set_intersect:
         df2 = pd.read_csv(args.set_intersect, sep='\t', index_col=0, dtype=str)
-        print(tabutil.core.set_intersect(df, df2, 'row'))
+        print('\n'.join(tabutil.core.set_intersect(df, df2, 'row')))
 
     elif args.set_union:
         df2 = pd.read_csv(args.set_union, sep='\t', index_col=0, dtype=str)
-        print(tabutil.core.set_union(df, df2, 'row'))
+        print('\n'.join(tabutil.core.set_union(df, df2, 'row')))
 
     elif args.set_diff:
         df2 = pd.read_csv(args.set_diff, sep='\t', index_col=0, dtype=str)
-        print(tabutil.core.set_diff(df, df2, 'row'))
+        print('\n'.join(tabutil.core.set_diff(df, df2, 'row')))
 
     elif args.set_sym_diff:
         df2 = pd.read_csv(args.set_sym_diff, sep='\t', index_col=0, dtype=str)
-        print(tabutil.core.set_sym_diff(df, df2, 'row'))
+        print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'row')))
 
 def subcommand_cell(args):
     df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
@@ -152,9 +168,10 @@ def main():
     col.add_argument('--rename', type=custom_parser_comma, action='append',
                                  metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', nargs='?', default=[])
 
-    col.add_argument('--show-duplicate', action='store', metavar='FILE', dest='show_duplicate')
-    col.add_argument('--show-missing', action='store', metavar='FILE', dest='show_missing')
-    col.add_argument('--show-unique', action='store', metavar='FILE', dest='show_unique')
+    col.add_argument('--set-intersect', action='store', metavar='FILE', dest='set_intersect')
+    col.add_argument('--set-diff',      action='store', metavar='FILE', dest='set_diff')
+    col.add_argument('--set-sym-diff',  action='store', metavar='FILE', dest='set_sym_diff')
+    col.add_argument('--set-union',     action='store', metavar='FILE', dest='set_union')
 
     col.add_argument('--spec', dest='spec')
 

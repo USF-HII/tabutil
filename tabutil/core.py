@@ -52,7 +52,7 @@ def set_intersect(df1, df2, mode):
         a = set(df1.columns)
         b = set(df2.columns)
 
-    return a.intersection(b)
+    return sorted(a.intersection(b))
 
 def set_union(df1, df2, mode):
     if mode == 'row':
@@ -62,7 +62,7 @@ def set_union(df1, df2, mode):
         a = set(df1.columns)
         b = set(df2.columns)
 
-    return a.union(b)
+    return sorted(a.union(b))
 
 def set_diff(df1, df2, mode):
     if mode == 'row':
@@ -72,7 +72,7 @@ def set_diff(df1, df2, mode):
         a = set(df1.columns)
         b = set(df2.columns)
 
-    return a.difference(b)
+    return sorted(a.difference(b))
 
 def set_sym_diff(df1, df2, mode):
     if mode == 'row':
@@ -82,4 +82,4 @@ def set_sym_diff(df1, df2, mode):
         a = set(df1.columns)
         b = set(df2.columns)
 
-    return a.symmetric_difference(b)
+    return sorted(a.symmetric_difference(b))
