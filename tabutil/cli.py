@@ -11,7 +11,6 @@ import tabutil.core
 #------------------------------------------------------------------------------------------------------
 # Functions
 #------------------------------------------------------------------------------------------------------
-
 def flatten(alist):
     return([val for sublist in alist for val in sublist])
 
@@ -71,9 +70,6 @@ def subcommand_row(args):
 
     elif args.append:
         df2 = pd.read_csv(args.append, sep='\t', index_col=0, dtype=str)
-        #print("====")
-        #print(df.to_csv(sep='\t'))
-        #print(df2.to_csv(sep='\t'))
         print(tabutil.core.row_append(df, df2))
 
     elif args.extract_match:
@@ -103,6 +99,18 @@ def subcommand_row(args):
         rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
         print(tabutil.core.row_rename(df, rename_pairs))
 
+    elif args.show_duplicate:
+        df2 = pd.read_csv(args.show_duplicate, sep='\t', index_col=0, dtype=str)
+        print(tabutil.core.show_duplicate(df, df2, 'row'))
+
+    elif args.show_missing:
+        df2 = pd.read_csv(args.show_missing, sep='\t', index_col=0, dtype=str)
+        print(tabutil.core.show_missing(df, df2, 'row')
+
+    elif args.show_unique:
+        df2 = pd.read_csv(args.show_unique, sep='\t', index_col=0, dtype=str)
+        print(tabutil.core.show_unique(df, df2, 'row'))
+
 def subcommand_cell(args):
     df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
 
@@ -129,16 +137,20 @@ def main():
     col = subparsers.add_parser('col', help='col --help')
     col.set_defaults(func=subcommand_col)
 
-    col.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append')
-
-    col.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', nargs='?', default=[])
+    col.add_argument('--append', action='store', metavar='FILE', dest='append')
 
     col.add_argument('--drop', type=custom_parser_comma, action='append',
                                metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop', nargs='?', default=[])
 
+    col.add_argument('--extract', type=custom_parser_comma, action='append',
+                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', nargs='?', default=[])
+
     col.add_argument('--rename', type=custom_parser_comma, action='append',
                                  metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', nargs='?', default=[])
+
+    col.add_argument('--show-duplicate', action='store', metavar='FILE', dest='show_duplicate')
+    col.add_argument('--show-missing', action='store', metavar='FILE', dest='show_missing')
+    col.add_argument('--show-unique', action='store', metavar='FILE', dest='show_unique')
 
     col.add_argument('--spec', dest='spec')
 
@@ -161,7 +173,11 @@ def main():
     row.add_argument('--rename', type=custom_parser_comma, action='append',
                                  metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', nargs='?', default=[])
 
-    row.add_argument('--append', action='store', metavar='FILE_TO_APPEND', dest='append')
+    row.add_argument('--append', action='store', metavar='FILE', dest='append')
+
+    row.add_argument('--show-duplicate', action='store', metavar='FILE', dest='show_duplicate')
+    row.add_argument('--show-missing', action='store', metavar='FILE', dest='show_missing')
+    row.add_argument('--show-unique', action='store', metavar='FILE', dest='show_unique')
 
     row.add_argument('--spec', dest='spec')
 

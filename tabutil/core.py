@@ -44,4 +44,15 @@ def cell_replace(df, changesets):
         df.replace(changeset[0], changeset[1], inplace=True)
     return df.to_csv(sep='\t')
 
+def row_compare_unique(df1, df2):
+    pass
+
+def row_compare_matching(df1, df2):
+    pass
+
+def column_compare_unique(df1, df2):
+    pass
+
+def column_compare_matching(df1, df2):
+    pass
 
