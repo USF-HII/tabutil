@@ -44,15 +44,42 @@ def cell_replace(df, changesets):
         df.replace(changeset[0], changeset[1], inplace=True)
     return df.to_csv(sep='\t')
 
-def row_compare_unique(df1, df2):
-    pass
+def set_intersect(df1, df2, mode):
+    if mode == 'row':
+        a = set(df1.index)
+        b = set(df2.index)
+    if mode == 'column':
+        a = set(df1.columns)
+        b = set(df2.columns)
 
-def row_compare_matching(df1, df2):
-    pass
+    return a.intersection(b)
 
-def column_compare_unique(df1, df2):
-    pass
+def set_union(df1, df2, mode):
+    if mode == 'row':
+        a = set(df1.index)
+        b = set(df2.index)
+    if mode == 'column':
+        a = set(df1.columns)
+        b = set(df2.columns)
 
-def column_compare_matching(df1, df2):
-    pass
+    return a.union(b)
 
+def set_diff(df1, df2, mode):
+    if mode == 'row':
+        a = set(df1.index)
+        b = set(df2.index)
+    if mode == 'column':
+        a = set(df1.columns)
+        b = set(df2.columns)
+
+    return a.difference(b)
+
+def set_sym_diff(df1, df2, mode):
+    if mode == 'row':
+        a = set(df1.index)
+        b = set(df2.index)
+    if mode == 'column':
+        a = set(df1.columns)
+        b = set(df2.columns)
+
+    return a.symmetric_difference(b)
