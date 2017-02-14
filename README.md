@@ -27,7 +27,7 @@
         --set-sym-diff       <file>
         --set-union          <file>
 
-    tabutil cell [OPTIONS] [--spec=spec_file] <input_file>
+    tabutil cell [OPTIONS] [--spec=spec_file] <file>
 
       OPTIONS:
         --replace            [value:new_value[,value:new_value...]]
