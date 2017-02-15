@@ -196,3 +196,17 @@ class TestTabUtil(unittest.TestCase):
         )
 
         assert_equals(result, expected)
+
+
+    def test_row_sort(self):
+        result = tabutil.core.row_sort(self.df, 'TXNIP')
+
+        expected = create_csv(
+            [ 'ID',    'Teddy3', 'Teddy1', 'Teddy2' ],
+            [ 'TXNIP', '29',     '42',     'apple'  ],
+            [ 'GCL6',  '99',     '56',     'baker'  ],
+            [ 'GOS2',  '100',    '77',     'apple'  ],
+            [ 'INS',   '54',     '3',      'echo'   ]
+        )
+
+        assert_equals(result, expected)

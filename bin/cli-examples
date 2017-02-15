@@ -66,6 +66,8 @@ run bin/venv tabutil row --extract --spec=<(spec_helper GCL6) tests/data/tabutil
 run bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
 run bin/venv tabutil row --rename --spec=<(spec_helper GCL6:FOO) tests/data/tabutil.tsv
 
+run bin/venv tabutil row --sort=TXNIP tests/data/tabutil.tsv
+
 run bin/venv tabutil row --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
 run bin/venv tabutil row --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
 run bin/venv tabutil row --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv

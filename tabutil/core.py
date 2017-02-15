@@ -43,6 +43,10 @@ def row_drop_blank(df):
     df.dropna(how='any', inplace=True)
     return df.to_csv(sep='\t')
 
+def row_sort(df, row_id):
+    columns = df.ix[row_id]
+    return df[columns.argsort()].to_csv(sep='\t')
+
 def cell_replace(df, changesets):
     for changeset in changesets:
         df.replace(changeset[0], changeset[1], inplace=True)

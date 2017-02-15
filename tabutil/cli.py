@@ -134,6 +134,10 @@ def subcommand_row(args):
         df2 = pd.read_csv(args.set_sym_diff, sep='\t', index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'row')))
 
+    elif args.sort:
+        row_id = args.sort
+        print(tabutil.core.row_sort(df, row_id))
+
 def subcommand_cell(args):
     df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
 
@@ -205,6 +209,8 @@ def main():
     row.add_argument('--set-diff',      action='store', metavar='FILE', dest='set_diff')
     row.add_argument('--set-sym-diff',  action='store', metavar='FILE', dest='set_sym_diff')
     row.add_argument('--set-union',     action='store', metavar='FILE', dest='set_union')
+
+    row.add_argument('--sort', action='store', metavar='ROWID', dest='sort')
 
     row.add_argument('--spec', dest='spec')
 
