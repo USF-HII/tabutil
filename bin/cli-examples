@@ -50,6 +50,10 @@ run bin/venv tabutil col --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/t
 
 run bin/venv tabutil col --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
 
+run bin/venv tabutil col --sort=Teddy2 tests/data/tabutil.tsv
+
+run bin/venv tabutil col --sort-numeric=Teddy3 tests/data/tabutil.tsv
+
 run bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
 
 run bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv

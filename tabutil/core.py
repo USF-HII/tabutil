@@ -47,6 +47,11 @@ def row_sort(df, row_id):
     columns = df.ix[row_id]
     return df[columns.argsort()].to_csv(sep='\t')
 
+def column_sort(df, column_name, numeric=False):
+    if numeric:
+        df[[column_name]] = df[[column_name]].apply(pd.to_numeric)
+    return df.sort_values(column_name).to_csv(sep='\t')
+
 def cell_replace(df, changesets):
     for changeset in changesets:
         df.replace(changeset[0], changeset[1], inplace=True)

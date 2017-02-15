@@ -57,6 +57,14 @@ def subcommand_col(args):
 
         print(tabutil.core.column_rename(df, rename_pairs))
 
+    elif args.sort:
+        column_name = args.sort
+        print(tabutil.core.column_sort(df, column_name))
+
+    elif args.sort_numeric:
+        column_name = args.sort_numeric
+        print(tabutil.core.column_sort(df, column_name, numeric=True))
+
     elif args.set_intersect:
         df2 = pd.read_csv(args.set_intersect, sep='\t', index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_intersect(df, df2, 'column')))
@@ -179,6 +187,9 @@ def main():
     col.add_argument('--set-diff',      action='store', metavar='FILE', dest='set_diff')
     col.add_argument('--set-sym-diff',  action='store', metavar='FILE', dest='set_sym_diff')
     col.add_argument('--set-union',     action='store', metavar='FILE', dest='set_union')
+
+    col.add_argument('--sort', action='store', metavar='COLUMN_NAME', dest='sort')
+    col.add_argument('--sort-numeric', action='store', metavar='COLUMN_NAME', dest='sort_numeric')
 
     col.add_argument('--spec', dest='spec')
 

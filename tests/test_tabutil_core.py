@@ -1,4 +1,4 @@
-# Custeom Test Helper Functions
+# CusteomH Testeelper Functions
 from test_helper import *
 
 # Utility libraries
@@ -210,3 +210,30 @@ class TestTabUtil(unittest.TestCase):
         )
 
         assert_equals(result, expected)
+
+    def test_column_sort(self):
+        result = tabutil.core.column_sort(self.df, 'Teddy2')
+
+        expected = create_csv(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
+            [ 'TXNIP', '42',     'apple',  '29'     ],
+            [ 'GOS2',  '77',     'apple',  '100'    ],
+            [ 'GCL6',  '56',     'baker',  '99'     ],
+            [ 'INS',   '3',      'echo',   '54'     ],
+        )
+
+        assert_equals(result, expected)
+
+    def test_column_sort_numeric(self):
+        result = tabutil.core.column_sort(self.df, 'Teddy3', numeric=True)
+
+        expected = create_csv(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
+            [ 'TXNIP', '42',     'apple',  '29'     ],
+            [ 'INS',   '3',      'echo',   '54'     ],
+            [ 'GCL6',  '56',     'baker',  '99'     ],
+            [ 'GOS2',  '77',     'apple',  '100'    ]
+        )
+
+        assert_equals(result, expected)
+

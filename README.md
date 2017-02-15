@@ -13,6 +13,8 @@
         --set-intersect      <file>
         --set-sym-diff       <file>
         --set-union          <file>
+        --sort               column_name
+        --sort-numeric       column_name
 
     tabutil row [OPTIONS] [--spec=spec_file] <file>
 
@@ -27,6 +29,7 @@
         --set-intersect      <file>
         --set-sym-diff       <file>
         --set-union          <file>
+        --sort               row_id
 
     tabutil cell [OPTIONS] [--spec=spec_file] <file>
 
@@ -59,6 +62,7 @@ For `tabutil row --extract-match=apple:baker,charlie:delta,echo:foxtrot`:
 ## CLI Examples
 
 Run with `:.!bin/cli-examples` from vim:
+
 
     --------------------------------------------------------------------------------
     head tests/data/tabutil.tsv
@@ -197,6 +201,26 @@ Run with `:.!bin/cli-examples` from vim:
     Teddy6
 
     --------------------------------------------------------------------------------
+    bin/venv tabutil col --sort=Teddy2 tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    TXNIP 42        apple     29
+    GOS2  77        apple     100
+    GCL6  56        baker     99
+    INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil col --sort-numeric=Teddy3 tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    TXNIP 42        apple     29
+    INS   3         echo      54
+    GCL6  56        baker     99
+    GOS2  77        apple     100
+
+
+    --------------------------------------------------------------------------------
     bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID    Teddy1    Teddy2    Teddy3    Teddy4    Teddy5    Teddy6
@@ -283,6 +307,16 @@ Run with `:.!bin/cli-examples` from vim:
     FOO   56        baker     99
     GOS2  77        apple     100
     INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil row --sort=TXNIP tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy3    Teddy1    Teddy2
+    TXNIP 29        42        apple
+    GCL6  99        56        baker
+    GOS2  100       77        apple
+    INS   54        3         echo
 
 
     --------------------------------------------------------------------------------
