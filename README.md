@@ -53,7 +53,6 @@ For `tabutil row --extract-match=apple:baker,charlie:delta,echo:foxtrot`:
 
 Run with `:.!bin/cli-examples` from vim:
 
-
     --------------------------------------------------------------------------------
     head tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
@@ -109,13 +108,13 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --extract --spec tests/data/col-extract-spec.txt tests/data/tabutil.tsv
+    bin/venv tabutil col --drop --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
-    ID    Teddy1    Teddy2
-    TXNIP 42        apple
-    GCL6  56        baker
-    GOS2  77        apple
-    INS   3         echo
+    ID    Teddy1
+    TXNIP 42
+    GCL6  56
+    GOS2  77
+    INS   3
 
 
     --------------------------------------------------------------------------------
@@ -129,9 +128,29 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
+    bin/venv tabutil col --extract --spec=/dev/fd/63 tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy2    Teddy3
+    TXNIP apple     29
+    GCL6  baker     99
+    GOS2  apple     100
+    INS   echo      54
+
+
+    --------------------------------------------------------------------------------
     bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
-    ID    Teddy1    Teddy2    Teddy3
+    ID    TeddyA    TeddyB    TeddyC
+    TXNIP 42        apple     29
+    GCL6  56        baker     99
+    GOS2  77        apple     100
+    INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil col --rename --spec=/dev/fd/63 tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    TeddyA    TeddyB    TeddyC
     TXNIP 42        apple     29
     GCL6  56        baker     99
     GOS2  77        apple     100
@@ -193,7 +212,24 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
+    bin/venv tabutil row --drop --spec=/dev/fd/63 tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    TXNIP 42        apple     29
+    GOS2  77        apple     100
+    INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
     bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    TXNIP 42        apple     29
+    GOS2  77        apple     100
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil row --extract-match --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID    Teddy1    Teddy2    Teddy3
     TXNIP 42        apple     29
@@ -208,7 +244,24 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
+    bin/venv tabutil row --extract --spec=/dev/fd/63 tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    GCL6  56        baker     99
+
+
+    --------------------------------------------------------------------------------
     bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    TXNIP 42        apple     29
+    FOO   56        baker     99
+    GOS2  77        apple     100
+    INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil row --rename --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID    Teddy1    Teddy2    Teddy3
     TXNIP 42        apple     29
@@ -244,6 +297,16 @@ Run with `:.!bin/cli-examples` from vim:
 
     --------------------------------------------------------------------------------
     bin/venv tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    TXNIP 2000      egglplant 29
+    GCL6  56        baker     99
+    GOS2  77        egglplant 100
+    INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil cell --replace --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID    Teddy1    Teddy2    Teddy3
     TXNIP 2000      egglplant 29
