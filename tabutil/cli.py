@@ -37,7 +37,7 @@ def subcommand_col(args):
         else:
             column_names = flatten(args.extract)
 
-        print(tabutil.core.column_extract(df, *column_names))
+        print(tabutil.core.column_extract(df, column_names))
 
     elif args.drop:
         if args.spec:
@@ -45,7 +45,7 @@ def subcommand_col(args):
         else:
             column_names = flatten(args.drop)
 
-        print(tabutil.core.column_drop(df, *column_names))
+        print(tabutil.core.column_drop(df, column_names))
 
     elif args.rename:
         if args.spec:
@@ -82,7 +82,7 @@ def subcommand_row(args):
         else:
             row_ids = flatten(args.extract)
 
-        print(tabutil.core.row_extract(df, *row_ids))
+        print(tabutil.core.row_extract(df, row_ids))
 
     elif args.append:
         df2 = pd.read_csv(args.append, sep='\t', index_col=0, dtype=str)
@@ -104,7 +104,7 @@ def subcommand_row(args):
         else:
             row_ids = flatten(args.drop)
 
-        print(tabutil.core.row_drop(df, *row_ids))
+        print(tabutil.core.row_drop(df, row_ids))
 
     elif args.rename:
         if args.spec:

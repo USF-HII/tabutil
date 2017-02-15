@@ -49,7 +49,7 @@ class TestTabUtil(unittest.TestCase):
         self.df_c = pd.read_csv(input_file_c, sep='\t', index_col=0, dtype=str)
 
     def test_column_extract(self):
-        result = tabutil.core.column_extract(self.df, 'Teddy1', 'Teddy3')
+        result = tabutil.core.column_extract(self.df, ['Teddy1', 'Teddy3'])
 
         expected = create_csv(
             [ 'ID',    'Teddy1', 'Teddy3' ],
@@ -86,7 +86,7 @@ class TestTabUtil(unittest.TestCase):
         assert_equals(result, expected)
 
     def test_row_extract(self):
-        result = tabutil.core.row_extract(self.df, 'TXNIP', 'GCL6')
+        result = tabutil.core.row_extract(self.df, ['TXNIP', 'GCL6'])
 
         expected = create_csv(
             [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
@@ -97,7 +97,7 @@ class TestTabUtil(unittest.TestCase):
         assert_equals(result, expected)
 
     def test_column_drop(self):
-        result = tabutil.core.column_drop(self.df, 'Teddy1', 'Teddy3')
+        result = tabutil.core.column_drop(self.df, ['Teddy1', 'Teddy3'])
 
         expected = create_csv(
             [ 'ID',    'Teddy2' ],
@@ -110,7 +110,7 @@ class TestTabUtil(unittest.TestCase):
         assert_equals(result, expected)
 
     def test_row_drop(self):
-        result = tabutil.core.row_drop(self.df, 'GCL6')
+        result = tabutil.core.row_drop(self.df, ['GCL6'])
 
         expected = create_csv(
             [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
@@ -122,7 +122,7 @@ class TestTabUtil(unittest.TestCase):
         assert_equals(result, expected)
 
     def test_column_rename(self):
-        result = tabutil.core.column_rename(self.df, ('Teddy2', 'TeddyB'), ('Teddy1', 'TeddyA'))
+        result = tabutil.core.column_rename(self.df, [('Teddy2', 'TeddyB'), ('Teddy1', 'TeddyA')])
 
         expected = create_csv(
             [ 'ID',    'TeddyA', 'TeddyB', 'Teddy3' ],
