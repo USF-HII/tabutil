@@ -55,6 +55,8 @@ run bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.ts
 run bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
 run bin/venv tabutil row --drop --spec=<(spec_helper GCL6) tests/data/tabutil.tsv
 
+run bin/venv tabutil row --drop-blank tests/data/tabutil-d.tsv
+
 run bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
 run bin/venv tabutil row --extract-match --spec=<(spec_helper Teddy2:apple) tests/data/tabutil.tsv
 

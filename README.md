@@ -19,6 +19,7 @@
       OPTIONS:
         --append             <file>
         --drop               [row_id[,row_id...]]
+        --drop-blank
         --extract            [row_id[,row_id...]]
         --extract-match      [column_name:value[,column_name:value...]]
         --rename             [row_id:new_id>[,<row_id:new_id>...]]
@@ -31,6 +32,12 @@
 
       OPTIONS:
         --replace            [value:new_value[,value:new_value...]]
+
+## Option Explanations
+
+tabutil row:
+
+    - `--drop-blank` - drop any row with a blank value in any of its columns
 
 ## Specfile
 
@@ -217,6 +224,14 @@ Run with `:.!bin/cli-examples` from vim:
     ID    Teddy1    Teddy2    Teddy3
     TXNIP 42        apple     29
     GOS2  77        apple     100
+    INS   3         echo      54
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil row --drop-blank tests/data/tabutil-d.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy1    Teddy2    Teddy3
+    GCL6  56        baker     99
     INS   3         echo      54
 
 

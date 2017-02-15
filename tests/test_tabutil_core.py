@@ -44,9 +44,19 @@ class TestTabUtil(unittest.TestCase):
             [ 'GEF', '50',     'zulu',   '90' ]
         )
 
+        input_file_d = create_input_file(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
+            [ 'TXNIP', '',       'apple',  '29'     ],
+            [ 'GCL6',  '56',     'baker',  '99'     ],
+            [ 'GOS2',  '77',     'apple',  ''       ],
+            [ 'INS',   '3',      'echo',   '54'     ]
+        )
+
+
         self.df = pd.read_csv(input_file, sep='\t', index_col=0, dtype=str)
         self.df_b = pd.read_csv(input_file_b, sep='\t', index_col=0, dtype=str)
         self.df_c = pd.read_csv(input_file_c, sep='\t', index_col=0, dtype=str)
+        self.df_d = pd.read_csv(input_file_d, sep='\t', index_col=0, dtype=str)
 
     def test_column_extract(self):
         result = tabutil.core.column_extract(self.df, ['Teddy1', 'Teddy3'])
@@ -172,6 +182,17 @@ class TestTabUtil(unittest.TestCase):
             [ 'GCL6',  '56',     'baker',     '99'     ],
             [ 'GOS2',  '77',     'eggplant',  '100'    ],
             [ 'INS',   '3',      'echo',      '54'     ]
+        )
+
+        assert_equals(result, expected)
+
+    def test_row_drop_blank(self):
+        result = tabutil.core.row_drop_blank(self.df_d)
+
+        expected = create_csv(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
+            [ 'GCL6',  '56',     'baker',  '99'     ],
+            [ 'INS',   '3',      'echo',   '54'     ]
         )
 
         assert_equals(result, expected)

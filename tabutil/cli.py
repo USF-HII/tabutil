@@ -106,6 +106,9 @@ def subcommand_row(args):
 
         print(tabutil.core.row_drop(df, row_ids))
 
+    elif args.drop_blank:
+        print(tabutil.core.row_drop_blank(df))
+
     elif args.rename:
         if args.spec:
             rename_pairs = read_spec(args.spec)
@@ -190,6 +193,8 @@ def main():
 
     row.add_argument('--drop', type=custom_parser_comma, action='append',
                                metavar='ROW_ID[,ROW_ID...]', dest='drop', nargs='?', default=[])
+
+    row.add_argument('--drop-blank', action='store_true', dest='drop_blank')
 
     row.add_argument('--rename', type=custom_parser_comma, action='append',
                                  metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', nargs='?', default=[])
