@@ -30,6 +30,7 @@
         --set-sym-diff       <file>
         --set-union          <file>
         --sort               row_id
+        --sort-numeric       row_id
 
     tabutil cell [OPTIONS] [--spec=spec_file] <file>
 
@@ -317,6 +318,14 @@ Run with `:.!bin/cli-examples` from vim:
     GCL6  99        56        baker
     GOS2  100       77        apple
     INS   54        3         echo
+
+
+    --------------------------------------------------------------------------------
+    bin/venv tabutil row --sort-numeric=TXNIP tests/data/tabutil-e.tsv
+    --------------------------------------------------------------------------------
+    ID    Teddy2    Teddy3    Teddy1
+    TXNIP 9         97        100
+    INS   echo      54        3
 
 
     --------------------------------------------------------------------------------

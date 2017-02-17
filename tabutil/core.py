@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 
 def column_extract(df, columns):
     return(df.loc[:, columns].to_csv(sep='\t'))
@@ -43,7 +44,9 @@ def row_drop_blank(df):
     df.dropna(how='any', inplace=True)
     return df.to_csv(sep='\t')
 
-def row_sort(df, row_id):
+def row_sort(df, row_id, numeric=False):
+    if numeric:
+        df.loc[row_id] = df.loc[row_id].apply(pd.to_numeric)
     columns = df.ix[row_id]
     return df[columns.argsort()].to_csv(sep='\t')
 

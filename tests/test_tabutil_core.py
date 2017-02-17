@@ -52,11 +52,18 @@ class TestTabUtil(unittest.TestCase):
             [ 'INS',   '3',      'echo',   '54'     ]
         )
 
+        input_file_e = create_input_file(
+            [ 'ID',    'Teddy1', 'Teddy2', 'Teddy3' ],
+            [ 'TXNIP', '100',    '9',      '97'     ],
+            [ 'INS',   '3',      'echo',   '54'     ]
+        )
+
 
         self.df = pd.read_csv(input_file, sep='\t', index_col=0, dtype=str)
         self.df_b = pd.read_csv(input_file_b, sep='\t', index_col=0, dtype=str)
         self.df_c = pd.read_csv(input_file_c, sep='\t', index_col=0, dtype=str)
         self.df_d = pd.read_csv(input_file_d, sep='\t', index_col=0, dtype=str)
+        self.df_e = pd.read_csv(input_file_e, sep='\t', index_col=0, dtype=str)
 
     def test_column_extract(self):
         result = tabutil.core.column_extract(self.df, ['Teddy1', 'Teddy3'])
@@ -207,6 +214,17 @@ class TestTabUtil(unittest.TestCase):
             [ 'GCL6',  '99',     '56',     'baker'  ],
             [ 'GOS2',  '100',    '77',     'apple'  ],
             [ 'INS',   '54',     '3',      'echo'   ]
+        )
+
+        assert_equals(result, expected)
+
+    def test_row_sort_numeric(self):
+        result = tabutil.core.row_sort(self.df_e, 'TXNIP', numeric=True)
+
+        expected = create_csv(
+            [ 'ID',    'Teddy2',  'Teddy3', 'Teddy1' ],
+            [ 'TXNIP', '9',       '97',     '100'    ],
+            [ 'INS',   'echo',    '54',     '3'      ]
         )
 
         assert_equals(result, expected)
