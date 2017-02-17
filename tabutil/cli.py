@@ -12,16 +12,16 @@ import tabutil.core
 # Functions
 #------------------------------------------------------------------------------------------------------
 def flatten(alist):
-    return([val for sublist in alist for val in sublist])
+    return [val for sublist in alist for val in sublist]
 
 def custom_parser_comma(astring, separator=','):
     alist = astring.split(separator)
     alist = [a.strip() for a in alist if len(a)]
-    return(alist)
+    return alist
 
 def read_spec(filename):
     with open(filename) as f:
-        return([line.rstrip() for line in f])
+        return [line.rstrip( for line in f])
 
 def subcommand_col(args):
     separator = '\t'
