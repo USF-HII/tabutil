@@ -1,5 +1,4 @@
 import pandas as pd
-import sys
 
 def column_extract(df, columns):
     return df.loc[:, columns].to_csv(sep='\t')
@@ -19,11 +18,10 @@ def column_append(df, df2):
     return appended_df.to_csv(sep='\t')
 
 def row_extract(df, row_ids):
-    separator='\t'
-    return df.filter(items=row_ids, axis='index'.to_csv(sep='\t'))
+    return df.filter(items=row_ids, axis='index').to_csv(sep='\t')
 
 def row_extract_match(df, column_name, value):
-    return df.loc[df[column_name] == str(value].to_csv(sep='\t'))
+    return df.loc[df[column_name] == str(value)].to_csv(sep='\t')
 
 def row_drop(df, row_ids):
     for row_id in row_ids:
@@ -99,4 +97,3 @@ def set_sym_diff(df1, df2, mode):
         b = set(df2.columns)
 
     return sorted(a.symmetric_difference(b))
-

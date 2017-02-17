@@ -1,11 +1,8 @@
 #!/usr/bin/env python3.5
 
 import argparse
-import os
 import sys
-import pprint as pp
 import pandas as pd
-
 import tabutil.core
 
 #------------------------------------------------------------------------------------------------------
@@ -21,7 +18,7 @@ def custom_parser_comma(astring, separator=','):
 
 def read_spec(filename):
     with open(filename) as f:
-        return [line.rstrip( for line in f])
+        return [line.rstrip() for line in f]
 
 def subcommand_col(args):
     separator = '\t'
@@ -102,7 +99,7 @@ def subcommand_row(args):
         else:
             column_value_pair = flatten(args.extract_match)
 
-        column_value_pair =  [(p.split(':')[0], p.split(':')[1]) for p in column_value_pair]
+        column_value_pair = [(p.split(':')[0], p.split(':')[1]) for p in column_value_pair]
 
         print(tabutil.core.row_extract_match(df, column_value_pair[0][0], column_value_pair[0][1]))
 
@@ -179,18 +176,18 @@ def main():
     col.add_argument('--append', action='store', metavar='FILE', dest='append')
 
     col.add_argument('--drop', type=custom_parser_comma, action='append',
-                               metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop', nargs='?', default=[])
+                     metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='drop', nargs='?', default=[])
 
     col.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', nargs='?', default=[])
+                     metavar='COLUMN_NAME[,COLUMN_NAME]', dest='extract', nargs='?', default=[])
 
     col.add_argument('--rename', type=custom_parser_comma, action='append',
-                                 metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', nargs='?', default=[])
+                     metavar='COLUMN_NAME[,COLUMN_NAME...]', dest='rename', nargs='?', default=[])
 
     col.add_argument('--set-intersect', action='store', metavar='FILE', dest='set_intersect')
-    col.add_argument('--set-diff',      action='store', metavar='FILE', dest='set_diff')
-    col.add_argument('--set-sym-diff',  action='store', metavar='FILE', dest='set_sym_diff')
-    col.add_argument('--set-union',     action='store', metavar='FILE', dest='set_union')
+    col.add_argument('--set-diff', action='store', metavar='FILE', dest='set_diff')
+    col.add_argument('--set-sym-diff', action='store', metavar='FILE', dest='set_sym_diff')
+    col.add_argument('--set-union', action='store', metavar='FILE', dest='set_union')
 
     col.add_argument('--sort', action='store', metavar='COLUMN_NAME', dest='sort')
     col.add_argument('--sort-numeric', action='store', metavar='COLUMN_NAME', dest='sort_numeric')
@@ -205,25 +202,25 @@ def main():
     row.set_defaults(func=subcommand_row)
 
     row.add_argument('--extract', type=custom_parser_comma, action='append',
-                                  metavar='ROW_ID[,ROW_ID...]', dest='extract', nargs='?', default=[])
+                     metavar='ROW_ID[,ROW_ID...]', dest='extract', nargs='?', default=[])
 
     row.add_argument('--extract-match', type=custom_parser_comma, action='append',
-                                        metavar='COLUMN_NAME:VALUE[,COLUMN_NAME:VALUE...]', nargs='?', dest='extract_match', default=[])
+                     metavar='COLUMN_NAME:VALUE[,COLUMN_NAME:VALUE...]', nargs='?', dest='extract_match', default=[])
 
     row.add_argument('--drop', type=custom_parser_comma, action='append',
-                               metavar='ROW_ID[,ROW_ID...]', dest='drop', nargs='?', default=[])
+                     metavar='ROW_ID[,ROW_ID...]', dest='drop', nargs='?', default=[])
 
     row.add_argument('--drop-blank', action='store_true', dest='drop_blank')
 
     row.add_argument('--rename', type=custom_parser_comma, action='append',
-                                 metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', nargs='?', default=[])
+                     metavar='ROW_ID:NEW_ID[,ROW_ID:NEW_ID...]', dest='rename', nargs='?', default=[])
 
     row.add_argument('--append', action='store', metavar='FILE', dest='append')
 
     row.add_argument('--set-intersect', action='store', metavar='FILE', dest='set_intersect')
-    row.add_argument('--set-diff',      action='store', metavar='FILE', dest='set_diff')
-    row.add_argument('--set-sym-diff',  action='store', metavar='FILE', dest='set_sym_diff')
-    row.add_argument('--set-union',     action='store', metavar='FILE', dest='set_union')
+    row.add_argument('--set-diff', action='store', metavar='FILE', dest='set_diff')
+    row.add_argument('--set-sym-diff', action='store', metavar='FILE', dest='set_sym_diff')
+    row.add_argument('--set-union', action='store', metavar='FILE', dest='set_union')
 
     row.add_argument('--sort', action='store', metavar='ROW_ID', dest='sort')
     row.add_argument('--sort-numeric', action='store', metavar='ROW_ID', dest='sort_numeric')
@@ -238,7 +235,7 @@ def main():
     cell.set_defaults(func=subcommand_cell)
 
     cell.add_argument('--replace', type=custom_parser_comma, action='append',
-                                    metavar='OLD_VALUE:NEW_VALUE[,OLD_VALUE:NEW_VALUE...]', dest='replace', nargs='?', default=[])
+                      metavar='OLD_VALUE:NEW_VALUE[,OLD_VALUE:NEW_VALUE...]', dest='replace', nargs='?', default=[])
 
     cell.add_argument('--spec', dest='spec')
 
@@ -252,4 +249,3 @@ def main():
     else:
         parser.print_help()
         sys.exit(1)
-

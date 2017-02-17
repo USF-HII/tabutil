@@ -8,3 +8,7 @@ unit:
 
 cli: install
 	bin/cli-examples
+
+lint:
+	bin/venv pylint --rcfile=.pylintrc --reports=no --output-format=parseable tabutil/*.py
+
