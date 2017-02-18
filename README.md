@@ -2,40 +2,49 @@
 
 ## Synopsis
 
-    tabutil col [OPTIONS] [--spec=spec_file] <file>
+    tabutil [--input-separator=<separator>]
+            [--output-separator=<separator>]
+            <col|row|cell> [options]
+
+---
+
+    tabutil col [options] [--spec=<spec_file>] <file>
 
       OPTIONS:
         --append             <file>
-        --drop               [column_name[,column_name...]]
-        --extract            [column_name[,column_name...]]
-        --rename             [column_name:new_name[,column_name:new_name...]]
+        --drop               [<column_name>[,<column_name>...]]
+        --extract            [<column_name>[,<column_name>...]]
+        --rename             [<column_name>:<new_name>[,<column_name>:<new_name>...]]
         --set-diff           <file>
         --set-intersect      <file>
         --set-sym-diff       <file>
         --set-union          <file>
-        --sort               column_name
-        --sort-numeric       column_name
+        --sort               <column_name>
+        --sort-numeric       <column_name>
+---
 
-    tabutil row [OPTIONS] [--spec=spec_file] <file>
+    tabutil row [options] [--spec=<spec_file>] <file>
 
       OPTIONS:
         --append             <file>
-        --drop               [row_id[,row_id...]]
+        --drop               [<row_id>[,<row_id>...]]
         --drop-blank
-        --extract            [row_id[,row_id...]]
-        --extract-match      [column_name:value[,column_name:value...]]
+        --extract            [<row_id>[,<row_id>...]]
+        --extract-match      [<column_name>:<value>[,<column_name>:<value>...]]
         --rename             [row_id:new_id>[,<row_id:new_id>...]]
         --set-diff           <file>
         --set-intersect      <file>
         --set-sym-diff       <file>
         --set-union          <file>
-        --sort               row_id
-        --sort-numeric       row_id
+        --sort               <row_id>
+        --sort-numeric       <row_id>
 
-    tabutil cell [OPTIONS] [--spec=spec_file] <file>
+---
+
+    tabutil cell [options] [--spec=<spec_file>] <file>
 
       OPTIONS:
-        --replace            [value:new_value[,value:new_value...]]
+        --replace            [<value>:<new_value>[,<value>:<new_value>...]]
 
 ## Option Explanations
 
