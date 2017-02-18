@@ -20,13 +20,22 @@ def read_spec(filename):
     with open(filename) as f:
         return [line.rstrip() for line in f]
 
+def convert_separator(separator):
+    if separator == '\\t':
+        return '\t'
+    elif separator == '\\n':
+        return '\n'
+    else:
+        return separator
+
 def subcommand_col(args):
-    separator = '\t'
-    df = pd.read_csv(args.input_file, sep=separator, index_col=0, dtype=str)
+    input_separator = convert_separator(args.input_separator)
+    output_separator = convert_separator(args.output_separator)
+    df = pd.read_csv(args.input_file, sep=input_separator, index_col=0, dtype=str)
 
     if args.append:
-        df2 = pd.read_csv(args.append, sep=separator, index_col=0, dtype=str)
-        print(tabutil.core.column_append(df, df2))
+        df2 = pd.read_csv(args.append, sep=input_separator, index_col=0, dtype=str)
+        print(tabutil.core.column_append(df, df2, separator=output_separator))
 
     elif args.extract:
         if args.spec:
@@ -34,7 +43,7 @@ def subcommand_col(args):
         else:
             column_names = flatten(args.extract)
 
-        print(tabutil.core.column_extract(df, column_names))
+        print(tabutil.core.column_extract(df, column_names, separator=output_separator))
 
     elif args.drop:
         if args.spec:
@@ -42,7 +51,7 @@ def subcommand_col(args):
         else:
             column_names = flatten(args.drop)
 
-        print(tabutil.core.column_drop(df, column_names))
+        print(tabutil.core.column_drop(df, column_names, separator=output_separator))
 
     elif args.rename:
         if args.spec:
@@ -52,34 +61,36 @@ def subcommand_col(args):
 
         rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
 
-        print(tabutil.core.column_rename(df, rename_pairs))
+        print(tabutil.core.column_rename(df, rename_pairs, separator=output_separator))
 
     elif args.sort:
         column_name = args.sort
-        print(tabutil.core.column_sort(df, column_name))
+        print(tabutil.core.column_sort(df, column_name, separator=output_separator))
 
     elif args.sort_numeric:
         column_name = args.sort_numeric
-        print(tabutil.core.column_sort(df, column_name, numeric=True))
+        print(tabutil.core.column_sort(df, column_name, numeric=True, separator=output_separator))
 
     elif args.set_intersect:
-        df2 = pd.read_csv(args.set_intersect, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_intersect, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_intersect(df, df2, 'column')))
 
     elif args.set_union:
-        df2 = pd.read_csv(args.set_union, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_union, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_union(df, df2, 'column')))
 
     elif args.set_diff:
-        df2 = pd.read_csv(args.set_diff, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_diff, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_diff(df, df2, 'column')))
 
     elif args.set_sym_diff:
-        df2 = pd.read_csv(args.set_sym_diff, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_sym_diff, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'column')))
 
 def subcommand_row(args):
-    df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
+    input_separator = convert_separator(args.input_separator)
+    output_separator = convert_separator(args.output_separator)
+    df = pd.read_csv(args.input_file, sep=input_separator, index_col=0, dtype=str)
 
     if args.extract:
         if args.spec:
@@ -87,11 +98,11 @@ def subcommand_row(args):
         else:
             row_ids = flatten(args.extract)
 
-        print(tabutil.core.row_extract(df, row_ids))
+        print(tabutil.core.row_extract(df, row_ids, separator=output_separator))
 
     elif args.append:
-        df2 = pd.read_csv(args.append, sep='\t', index_col=0, dtype=str)
-        print(tabutil.core.row_append(df, df2))
+        df2 = pd.read_csv(args.append, sep=input_separator, index_col=0, dtype=str)
+        print(tabutil.core.row_append(df, df2, separator=output_separator))
 
     elif args.extract_match:
         if args.spec:
@@ -101,7 +112,7 @@ def subcommand_row(args):
 
         column_value_pair = [(p.split(':')[0], p.split(':')[1]) for p in column_value_pair]
 
-        print(tabutil.core.row_extract_match(df, column_value_pair[0][0], column_value_pair[0][1]))
+        print(tabutil.core.row_extract_match(df, column_value_pair[0][0], column_value_pair[0][1], separator=output_separator))
 
     elif args.drop:
         if args.spec:
@@ -109,10 +120,10 @@ def subcommand_row(args):
         else:
             row_ids = flatten(args.drop)
 
-        print(tabutil.core.row_drop(df, row_ids))
+        print(tabutil.core.row_drop(df, row_ids, separator=output_separator))
 
     elif args.drop_blank:
-        print(tabutil.core.row_drop_blank(df))
+        print(tabutil.core.row_drop_blank(df, separator=output_separator))
 
     elif args.rename:
         if args.spec:
@@ -121,34 +132,36 @@ def subcommand_row(args):
             rename_pairs = flatten(args.rename)
 
         rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
-        print(tabutil.core.row_rename(df, rename_pairs))
+        print(tabutil.core.row_rename(df, rename_pairs, separator=output_separator))
 
     elif args.set_intersect:
-        df2 = pd.read_csv(args.set_intersect, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_intersect, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_intersect(df, df2, 'row')))
 
     elif args.set_union:
-        df2 = pd.read_csv(args.set_union, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_union, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_union(df, df2, 'row')))
 
     elif args.set_diff:
-        df2 = pd.read_csv(args.set_diff, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_diff, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_diff(df, df2, 'row')))
 
     elif args.set_sym_diff:
-        df2 = pd.read_csv(args.set_sym_diff, sep='\t', index_col=0, dtype=str)
+        df2 = pd.read_csv(args.set_sym_diff, sep=input_separator, index_col=0, dtype=str)
         print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'row')))
 
     elif args.sort:
         row_id = args.sort
-        print(tabutil.core.row_sort(df, row_id))
+        print(tabutil.core.row_sort(df, row_id, separator=output_separator))
 
     elif args.sort_numeric:
         row_id = args.sort_numeric
-        print(tabutil.core.row_sort(df, row_id, numeric=True))
+        print(tabutil.core.row_sort(df, row_id, numeric=True, separator=output_separator))
 
 def subcommand_cell(args):
-    df = pd.read_csv(args.input_file, sep='\t', index_col=0, dtype=str)
+    input_separator = convert_separator(args.input_separator)
+    output_separator = convert_separator(args.output_separator)
+    df = pd.read_csv(args.input_file, sep=input_separator, index_col=0, dtype=str)
 
     if args.replace:
         if args.spec:
@@ -157,13 +170,14 @@ def subcommand_cell(args):
             changesets = flatten(args.replace)
 
         changesets = [(c.split(':')[0], c.split(':')[1]) for c in changesets]
-        print(tabutil.core.cell_replace(df, changesets))
-
+        print(tabutil.core.cell_replace(df, changesets, separator=output_separator))
 
 def main():
-
     parser = argparse.ArgumentParser('tabutil',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument('--input-separator', action='store', dest='input_separator', default='\t')
+    parser.add_argument('--output-separator', action='store', dest='output_separator', default='\t')
 
     subparsers = parser.add_subparsers(help='sub-command help')
     subparsers.required = True
