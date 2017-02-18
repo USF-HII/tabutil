@@ -44,12 +44,15 @@ optimize-ast=no
 # all. Valid levels: HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED
 confidence=
 
-disable=invalid-name,missing-docstring
+disable=missing-docstring
 
 [FORMAT]
 
 max-line-length=132
 
+[BASIC]
+
+good-names=a,b,i,j,k,f,df
 
 ## # Enable the message, report, category or checker with the given id(s). You can
 ## # either give multiple identifier separated by comma (,) or put this option
