@@ -9,5 +9,4 @@ pylint==1.6.5
 python-dateutil==2.6.0
 pytz==2016.10
 six==1.10.0
-tabutil==0.8.0
 wrapt==1.10.8
