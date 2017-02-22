@@ -1,4 +1,4 @@
-all: unit cli
+all: unit install cli
 
 install:
 	bin/venv python setup.py install --force &>/dev/null
