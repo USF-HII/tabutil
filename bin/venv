@@ -5,19 +5,13 @@ set -eo pipefail
 MYSELF=$0
 BASE=$(readlink -f $(dirname ${MYSELF})/..)
 
-VIRTUALENV_PATHS="
-${VIRTUALENV_PATHS}
-/opt/hii/python/3.5.3/bin/python3.5
-/shares/hii/sw/python/3.5.3/bin/python3.5
-/usr/local/bin/python3.5
-/usr/bin/python3.5
-"
 
 set_virtualenv_default() {
+  local venv_bin=$1
   local path
   for path in ${VIRTUALENV_PATHS}; do
     if [[ -x ${path} ]]; then
-      VIRTUALENV=$(dirname ${path})/pyvenv
+      VIRTUALENV=$(dirname ${path})/${venv_bin}
       [[ -x ${VIRTUALENV} ]] && break
     fi
   done
@@ -35,6 +29,27 @@ if [[ ${1:-""} == '-r' || ${1:-""} == '--reset' ]]; then
     echo /bin/rm -rf ${venv} | /bin/bash -x
   fi
 fi
+
+if [[ $1 == '-2' ]]; then
+  shift
+  VIRTUALENV_PATHS="
+    /opt/hii/python/2.7.13/bin/python2.7
+    /shares/hii/sw/python/2.7.13/bin/python2.7
+    /usr/local/bin/python2.7
+    /usr/bin/python2.7
+  "
+  set_virtualenv_default virtualenv
+else
+  VIRTUALENV_PATHS="
+    /opt/hii/python/3.5.3/bin/python3.5
+    /opt/hii/python-3.5.3/bin/python3.5
+    /shares/hii/sw/python/3.5.3/bin/python3.5
+    /usr/local/bin/python3.5
+    /usr/bin/python3.5
+  "
+  set_virtualenv_default pyvenv
+fi
+
 
 if [[ ! -d ${venv} ]]; then
   echo
