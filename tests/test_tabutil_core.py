@@ -69,6 +69,19 @@ class TestTabUtil(unittest.TestCase):
         result = tabutil.core.column_extract(self.df, ['Teddy1', 'Teddy3'])
 
         expected = create_csv(
+            [ 'Teddy1', 'Teddy3' ],
+            [ '42',     '29' ],
+            [ '56',     '99' ],
+            [ '77',     '100' ],
+            [ '3',      '54' ]
+        )
+
+        assert_equals(result, expected)
+
+    def test_column_extract_with_index(self):
+        result = tabutil.core.column_extract_with_index(self.df, ['Teddy1', 'Teddy3'])
+
+        expected = create_csv(
             [ 'ID',    'Teddy1', 'Teddy3' ],
             [ 'TXNIP', '42',     '29' ],
             [ 'GCL6',  '56',     '99' ],

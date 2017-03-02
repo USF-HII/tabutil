@@ -43,7 +43,10 @@ def subcommand_col(args):
         else:
             column_names = flatten(args.extract)
 
-        print(tabutil.core.column_extract(df, column_names, separator=output_separator))
+        if args.with_index:
+            print(tabutil.core.column_extract_with_index(df, column_names, separator=output_separator))
+        else:
+            print(tabutil.core.column_extract(df, column_names, separator=output_separator))
 
     elif args.drop:
         if args.spec:
@@ -207,6 +210,8 @@ def main():
     col.add_argument('--sort-numeric', action='store', metavar='COLUMN_NAME', dest='sort_numeric')
 
     col.add_argument('--spec', dest='spec')
+
+    col.add_argument('--with-index', action='store_true', dest='with_index')
 
     col.add_argument('input_file')
 

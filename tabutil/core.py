@@ -1,6 +1,9 @@
 import pandas as pd
 
 def column_extract(df, columns, separator='\t'):
+    return df.loc[:, columns].to_csv(sep=separator, index=False)
+
+def column_extract_with_index(df, columns, separator='\t'):
     return df.loc[:, columns].to_csv(sep=separator)
 
 def column_drop(df, column_names, separator='\t'):

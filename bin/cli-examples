@@ -5,7 +5,7 @@ run() {
   echo "    --------------------------------------------------------------------------------"
   echo "    $@"
   echo "    --------------------------------------------------------------------------------"
-  "$@" | sed 's/^/    '/ | expand -t 10
+  "$@" | sed 's/^/    '/ | expand -t 12
 }
 
 border() {
@@ -38,6 +38,8 @@ run bin/venv tabutil col --drop --spec=<(spec_helper Teddy2 Teddy3) tests/data/t
 
 run bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
 run bin/venv tabutil col --extract --spec=<(spec_helper Teddy2 Teddy3) tests/data/tabutil.tsv
+
+run bin/venv tabutil col --extract=Teddy2,Teddy3 --with-index tests/data/tabutil.tsv
 
 run bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
 run bin/venv tabutil col --rename --spec=<(spec_helper Teddy1:TeddyA Teddy2:TeddyB Teddy3:TeddyC) tests/data/tabutil.tsv
