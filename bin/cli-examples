@@ -20,7 +20,6 @@ spec_helper() {
   done
 }
 
-
 run head tests/data/tabutil.tsv
 
 run head tests/data/tabutil-b.tsv
@@ -31,56 +30,56 @@ run head tests/data/col-extract-spec.txt
 
 border
 
-run bin/venv tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+run bin/venv -- tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
 
-run bin/venv tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
-run bin/venv tabutil col --drop --spec=<(spec_helper Teddy2 Teddy3) tests/data/tabutil.tsv
+run bin/venv -- tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
+run bin/venv -- tabutil col --drop --spec=<(spec_helper Teddy2 Teddy3) tests/data/tabutil.tsv
 
-run bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
-run bin/venv tabutil col --extract --spec=<(spec_helper Teddy2 Teddy3) tests/data/tabutil.tsv
+run bin/venv -- tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
+run bin/venv -- tabutil col --extract --spec=<(spec_helper Teddy2 Teddy3) tests/data/tabutil.tsv
 
-run bin/venv tabutil col --extract=Teddy2,Teddy3 --with-index tests/data/tabutil.tsv
+run bin/venv -- tabutil col --extract=Teddy2,Teddy3 --with-index tests/data/tabutil.tsv
 
-run bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
-run bin/venv tabutil col --rename --spec=<(spec_helper Teddy1:TeddyA Teddy2:TeddyB Teddy3:TeddyC) tests/data/tabutil.tsv
+run bin/venv -- tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
+run bin/venv -- tabutil col --rename --spec=<(spec_helper Teddy1\\tTeddyA Teddy2\\tTeddyB Teddy3\\tTeddyC) tests/data/tabutil.tsv
 
-run bin/venv tabutil col --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
+run bin/venv -- tabutil col --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
 
-run bin/venv tabutil col --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
+run bin/venv -- tabutil col --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
 
-run bin/venv tabutil col --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
+run bin/venv -- tabutil col --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
 
-run bin/venv tabutil col --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
+run bin/venv -- tabutil col --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
 
-run bin/venv tabutil col --sort=Teddy2 tests/data/tabutil.tsv
+run bin/venv -- tabutil col --sort=Teddy2 tests/data/tabutil.tsv
 
-run bin/venv tabutil col --sort-numeric=Teddy3 tests/data/tabutil.tsv
+run bin/venv -- tabutil col --sort-numeric=Teddy3 tests/data/tabutil.tsv
 
-run bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
+run bin/venv -- tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
 
-run bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
-run bin/venv tabutil row --drop --spec=<(spec_helper GCL6) tests/data/tabutil.tsv
+run bin/venv -- tabutil row --drop=GCL6 tests/data/tabutil.tsv
+run bin/venv -- tabutil row --drop --spec=<(spec_helper GCL6) tests/data/tabutil.tsv
 
-run bin/venv tabutil row --drop-blank tests/data/tabutil-d.tsv
+run bin/venv -- tabutil row --drop-blank tests/data/tabutil-d.tsv
 
-run bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
-run bin/venv tabutil row --extract-match --spec=<(spec_helper Teddy2:apple) tests/data/tabutil.tsv
+run bin/venv -- tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
+run bin/venv -- tabutil row --extract-match --spec=<(spec_helper Teddy2\\tapple) tests/data/tabutil.tsv
 
-run bin/venv tabutil row --extract=GCL6 tests/data/tabutil.tsv
-run bin/venv tabutil row --extract --spec=<(spec_helper GCL6) tests/data/tabutil.tsv
+run bin/venv -- tabutil row --extract=GCL6 tests/data/tabutil.tsv
+run bin/venv -- tabutil row --extract --spec=<(spec_helper GCL6) tests/data/tabutil.tsv
 
-run bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
-run bin/venv tabutil row --rename --spec=<(spec_helper GCL6:FOO) tests/data/tabutil.tsv
+run bin/venv -- tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+run bin/venv -- tabutil row --rename --spec=<(spec_helper GCL6\\tFOO) tests/data/tabutil.tsv
 
-run bin/venv tabutil row --sort=TXNIP tests/data/tabutil.tsv
+run bin/venv -- tabutil row --sort=TXNIP tests/data/tabutil.tsv
 
-run bin/venv tabutil row --sort-numeric=TXNIP tests/data/tabutil-e.tsv
+run bin/venv -- tabutil row --sort-numeric=TXNIP tests/data/tabutil-e.tsv
 
-run bin/venv tabutil row --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
-run bin/venv tabutil row --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
-run bin/venv tabutil row --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
-run bin/venv tabutil row --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
+run bin/venv -- tabutil row --set-diff=tests/data/tabutil-b.tsv       tests/data/tabutil.tsv
+run bin/venv -- tabutil row --set-intersect=tests/data/tabutil-b.tsv  tests/data/tabutil.tsv
+run bin/venv -- tabutil row --set-sym-diff=tests/data/tabutil-b.tsv    tests/data/tabutil.tsv
+run bin/venv -- tabutil row --set-union=tests/data/tabutil-b.tsv      tests/data/tabutil.tsv
 
-run bin/venv tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv
-run bin/venv tabutil cell --replace --spec=<(spec_helper 42:2000 apple:egglplant) tests/data/tabutil.tsv
+run bin/venv -- tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv
+run bin/venv -- tabutil cell --replace --spec=<(spec_helper 42\\t2000 apple\\tegglplant) tests/data/tabutil.tsv
 

@@ -59,10 +59,12 @@ def subcommand_col(args):
     elif args.rename:
         if args.spec:
             rename_pairs = read_spec(args.spec)
+            arg_sep = '\t'
         else:
             rename_pairs = flatten(args.rename)
+            arg_sep = ':'
 
-        rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
+        rename_pairs = [(p.split(arg_sep)[0], p.split(arg_sep)[1]) for p in rename_pairs]
 
         print(tabutil.core.column_rename(df, rename_pairs, separator=output_separator))
 
@@ -110,10 +112,12 @@ def subcommand_row(args):
     elif args.extract_match:
         if args.spec:
             column_value_pair = read_spec(args.spec)
+            arg_sep = '\t'
         else:
             column_value_pair = flatten(args.extract_match)
+            arg_sep = ':'
 
-        column_value_pair = [(p.split(':')[0], p.split(':')[1]) for p in column_value_pair]
+        column_value_pair = [(p.split(arg_sep)[0], p.split(arg_sep)[1]) for p in column_value_pair]
 
         print(tabutil.core.row_extract_match(df, column_value_pair[0][0], column_value_pair[0][1], separator=output_separator))
 
@@ -131,10 +135,13 @@ def subcommand_row(args):
     elif args.rename:
         if args.spec:
             rename_pairs = read_spec(args.spec)
+            arg_sep = '\t'
         else:
             rename_pairs = flatten(args.rename)
+            arg_sep = ':'
 
-        rename_pairs = [(p.split(':')[0], p.split(':')[1]) for p in rename_pairs]
+        rename_pairs = [(p.split(arg_sep)[0], p.split(arg_sep)[1]) for p in rename_pairs]
+
         print(tabutil.core.row_rename(df, rename_pairs, separator=output_separator))
 
     elif args.set_intersect:
@@ -169,10 +176,13 @@ def subcommand_cell(args):
     if args.replace:
         if args.spec:
             changesets = read_spec(args.spec)
+            arg_sep = '\t'
         else:
             changesets = flatten(args.replace)
+            arg_sep = ':'
 
-        changesets = [(c.split(':')[0], c.split(':')[1]) for c in changesets]
+        changesets = [(c.split(arg_sep)[0], c.split(arg_sep)[1]) for c in changesets]
+
         print(tabutil.core.cell_replace(df, changesets, separator=output_separator))
 
 def main():

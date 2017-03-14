@@ -114,7 +114,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil col --append=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3      Teddy4      Teddy5      Teddy6
     GCL6    56          baker       99          30          orange      10
@@ -124,7 +124,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --drop=Teddy2,Teddy3 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1
     TXNIP   42
@@ -134,7 +134,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --drop --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --drop --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1
     TXNIP   42
@@ -144,7 +144,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --extract=Teddy2,Teddy3 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     Teddy2  Teddy3
     apple   29
@@ -154,7 +154,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --extract --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --extract --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     Teddy2  Teddy3
     apple   29
@@ -164,7 +164,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --extract=Teddy2,Teddy3 --with-index tests/data/tabutil.tsv
+    bin/venv -- tabutil col --extract=Teddy2,Teddy3 --with-index tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy2      Teddy3
     TXNIP   apple       29
@@ -174,7 +174,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
+    bin/venv -- tabutil col --rename=Teddy1:TeddyA,Teddy2:TeddyB --rename=Teddy3:TeddyC tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      TeddyA      TeddyB      TeddyC
     TXNIP   42          apple       29
@@ -184,7 +184,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --rename --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --rename --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      TeddyA      TeddyB      TeddyC
     TXNIP   42          apple       29
@@ -194,29 +194,19 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --set-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil col --set-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     Teddy1
     Teddy2
     Teddy3
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --set-intersect=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil col --set-intersect=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --set-sym-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
-    --------------------------------------------------------------------------------
-    Teddy1
-    Teddy2
-    Teddy3
-    Teddy4
-    Teddy5
-    Teddy6
-
-    --------------------------------------------------------------------------------
-    bin/venv tabutil col --set-union=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil col --set-sym-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     Teddy1
     Teddy2
@@ -226,7 +216,17 @@ Run with `:.!bin/cli-examples` from vim:
     Teddy6
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --sort=Teddy2 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --set-union=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    --------------------------------------------------------------------------------
+    Teddy1
+    Teddy2
+    Teddy3
+    Teddy4
+    Teddy5
+    Teddy6
+
+    --------------------------------------------------------------------------------
+    bin/venv -- tabutil col --sort=Teddy2 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -236,7 +236,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil col --sort-numeric=Teddy3 tests/data/tabutil.tsv
+    bin/venv -- tabutil col --sort-numeric=Teddy3 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -246,7 +246,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil row --append=tests/data/tabutil-c.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3      Teddy4      Teddy5      Teddy6
     ABC                                         30          orange      10
@@ -259,7 +259,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --drop=GCL6 tests/data/tabutil.tsv
+    bin/venv -- tabutil row --drop=GCL6 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -268,7 +268,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --drop --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil row --drop --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -277,7 +277,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --drop-blank tests/data/tabutil-d.tsv
+    bin/venv -- tabutil row --drop-blank tests/data/tabutil-d.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     GCL6    56          baker       99
@@ -285,7 +285,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
+    bin/venv -- tabutil row --extract-match=Teddy2:apple tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -293,7 +293,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --extract-match --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil row --extract-match --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -301,21 +301,21 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --extract=GCL6 tests/data/tabutil.tsv
+    bin/venv -- tabutil row --extract=GCL6 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     GCL6    56          baker       99
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --extract --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil row --extract --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     GCL6    56          baker       99
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
+    bin/venv -- tabutil row --rename=GCL6:FOO tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -325,7 +325,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --rename --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil row --rename --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   42          apple       29
@@ -335,7 +335,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --sort=TXNIP tests/data/tabutil.tsv
+    bin/venv -- tabutil row --sort=TXNIP tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy3      Teddy1      Teddy2
     TXNIP   29          42          apple
@@ -345,7 +345,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --sort-numeric=TXNIP tests/data/tabutil-e.tsv
+    bin/venv -- tabutil row --sort-numeric=TXNIP tests/data/tabutil-e.tsv
     --------------------------------------------------------------------------------
     ID      Teddy2      Teddy3      Teddy1
     TXNIP   9           97          100
@@ -353,24 +353,24 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --set-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil row --set-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     INS
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --set-intersect=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil row --set-intersect=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     GCL6
     GOS2
     TXNIP
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --set-sym-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil row --set-sym-diff=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     INS
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil row --set-union=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
+    bin/venv -- tabutil row --set-union=tests/data/tabutil-b.tsv tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     GCL6
     GOS2
@@ -378,7 +378,7 @@ Run with `:.!bin/cli-examples` from vim:
     TXNIP
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv
+    bin/venv -- tabutil cell --replace=42:2000,apple:egglplant tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   2000        egglplant   29
@@ -388,7 +388,7 @@ Run with `:.!bin/cli-examples` from vim:
 
 
     --------------------------------------------------------------------------------
-    bin/venv tabutil cell --replace --spec=/dev/fd/63 tests/data/tabutil.tsv
+    bin/venv -- tabutil cell --replace --spec=/dev/fd/63 tests/data/tabutil.tsv
     --------------------------------------------------------------------------------
     ID      Teddy1      Teddy2      Teddy3
     TXNIP   2000        egglplant   29
