@@ -1,14 +1,14 @@
 all: unit install cli
 
 install:
-	bin/venv python setup.py install --force &>/dev/null
+	bin/venv -- python setup.py install --force &>/dev/null
 
 unit:
-	bin/venv nosetests --verbose tests
+	bin/venv -- nosetests --verbose tests
 
 cli: install
 	bin/cli-examples
 
 lint:
-	bin/venv pylint --rcfile=.pylintrc --reports=no --output-format=parseable tabutil/*.py
+	bin/venv -- pylint --rcfile=.pylintrc --reports=no --output-format=parseable tabutil/*.py
 
