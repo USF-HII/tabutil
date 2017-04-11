@@ -1,5 +1,29 @@
 # tabutil
 
+## Install
+
+Install latest master:
+
+    pip install git+https://github.com/usf-hii/tabutil
+
+Install specific version:
+
+    pip install git+https://github.com/usf-hii/tabutil@0.8.0
+
+Re-install latest master:
+
+    pip install --upgrade --force-reinstall git+https://github.com/usf-hii/tabutil
+
+---
+
+**Note**: `pip freeze` does not return a git reference correctly so manually add to `requirements.txt` as needed.
+
+For example:
+
+    echo 'git+https://github.com/usf-hii/tabutil@0.8.0' >> requirements.txt
+
+    pip install -r requirements.txt
+
 ## Synopsis
 
     tabutil [--input-separator=<separator>]
