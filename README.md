@@ -4,25 +4,16 @@
 
 Install latest master:
 
-    pip install git+https://github.com/usf-hii/tabutil
+    pip install -e git+https://github.com/usf-hii/tabutil@master#egg=tabutil
 
 Install specific version:
 
-    pip install git+https://github.com/usf-hii/tabutil@0.8.0
+    pip install -e git+https://github.com/usf-hii/tabutil@0.8.0#egg=tabutil
 
 Re-install latest master:
 
-    pip install --upgrade --force-reinstall git+https://github.com/usf-hii/tabutil
-
----
-
-**Note**: `pip freeze` does not return a git reference correctly so manually add to `requirements.txt` as needed.
-
-For example:
-
-    echo 'git+https://github.com/usf-hii/tabutil@0.8.0' >> requirements.txt
-
-    pip install -r requirements.txt
+    pip install --ignore-installed --force-reinstall --upgrade \
+                -e git+https://github.com/usf-hii/tabutil@master#egg=tabutil
 
 ## Synopsis
 
@@ -46,6 +37,11 @@ For example:
         --sort               <column_name>
         --sort-numeric       <column_name>
         --with-index         (Changes --extract option to include row index)
+
+      OPTIONS (with spec_file):
+        --drop          --spec=<spec_file>
+        --extract       --spec=<spec_file>
+        --rename        --spec=<spec_file>
 ---
 
     tabutil row [options] [--spec=<spec_file>] <file>
@@ -64,12 +60,21 @@ For example:
         --sort               <row_id>
         --sort-numeric       <row_id>
 
+      OPTIONS (with spec_file):
+        --drop          --spec=<spec_file>
+        --extract       --spec=<spec_file>
+        --extract-match --spec=<spec_file>
+        --rename        --spec=<spec_file>
+
 ---
 
     tabutil cell [options] [--spec=<spec_file>] <file>
 
       OPTIONS:
         --replace            [<value>:<new_value>[,<value>:<new_value>...]]
+
+      OPTIONS (with specfile):
+        --replace --spec=<spec_file>
 
 ## Option Explanations
 
