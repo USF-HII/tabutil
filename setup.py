@@ -10,7 +10,7 @@ install_requires = [
 setup(
     name='tabutil',
     url='https://github.com/usf-hii/tabutil',
-    version='0.8.0',
+    version='0.8.1',
     description='Table Utility with Plink-like functionality',
     author='Kevin Counts',
     author_email='counts@digicat.org',
