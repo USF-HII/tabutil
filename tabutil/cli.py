@@ -28,13 +28,18 @@ def convert_separator(separator):
     else:
         return separator
 
+def csv_to_df(filename, sep='\t'):
+    df = pd.read_csv(filename, sep=sep, dtype=str)
+    df = df.set_index(df.columns[0])
+    return df
+
 def subcommand_col(args):
     input_separator = convert_separator(args.input_separator)
     output_separator = convert_separator(args.output_separator)
-    df = pd.read_csv(args.input_file, sep=input_separator, index_col=0, dtype=str)
+    df = csv_to_df(args.input_file, sep=input_separator)
 
     if args.append:
-        df2 = pd.read_csv(args.append, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.append, sep=input_separator)
         print(tabutil.core.column_append(df, df2, separator=output_separator))
 
     elif args.extract:
@@ -77,25 +82,25 @@ def subcommand_col(args):
         print(tabutil.core.column_sort(df, column_name, numeric=True, separator=output_separator))
 
     elif args.set_intersect:
-        df2 = pd.read_csv(args.set_intersect, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_intersect, sep=input_separator)
         print('\n'.join(tabutil.core.set_intersect(df, df2, 'column')))
 
     elif args.set_union:
-        df2 = pd.read_csv(args.set_union, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_union, sep=input_separator)
         print('\n'.join(tabutil.core.set_union(df, df2, 'column')))
 
     elif args.set_diff:
-        df2 = pd.read_csv(args.set_diff, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_diff, sep=input_separator)
         print('\n'.join(tabutil.core.set_diff(df, df2, 'column')))
 
     elif args.set_sym_diff:
-        df2 = pd.read_csv(args.set_sym_diff, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_sym_diff, sep=input_separator)
         print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'column')))
 
 def subcommand_row(args):
     input_separator = convert_separator(args.input_separator)
     output_separator = convert_separator(args.output_separator)
-    df = pd.read_csv(args.input_file, sep=input_separator, index_col=0, dtype=str)
+    df = csv_to_df(args.input_file, sep=input_separator)
 
     if args.extract:
         if args.spec:
@@ -106,7 +111,7 @@ def subcommand_row(args):
         print(tabutil.core.row_extract(df, row_ids, separator=output_separator))
 
     elif args.append:
-        df2 = pd.read_csv(args.append, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.append, sep=input_separator)
         print(tabutil.core.row_append(df, df2, separator=output_separator))
 
     elif args.extract_match:
@@ -145,19 +150,19 @@ def subcommand_row(args):
         print(tabutil.core.row_rename(df, rename_pairs, separator=output_separator))
 
     elif args.set_intersect:
-        df2 = pd.read_csv(args.set_intersect, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_intersect, sep=input_separator)
         print('\n'.join(tabutil.core.set_intersect(df, df2, 'row')))
 
     elif args.set_union:
-        df2 = pd.read_csv(args.set_union, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_union, sep=input_separator)
         print('\n'.join(tabutil.core.set_union(df, df2, 'row')))
 
     elif args.set_diff:
-        df2 = pd.read_csv(args.set_diff, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_diff, sep=input_separator)
         print('\n'.join(tabutil.core.set_diff(df, df2, 'row')))
 
     elif args.set_sym_diff:
-        df2 = pd.read_csv(args.set_sym_diff, sep=input_separator, index_col=0, dtype=str)
+        df2 = csv_to_df(args.set_sym_diff, sep=input_separator)
         print('\n'.join(tabutil.core.set_sym_diff(df, df2, 'row')))
 
     elif args.sort:
@@ -171,7 +176,7 @@ def subcommand_row(args):
 def subcommand_cell(args):
     input_separator = convert_separator(args.input_separator)
     output_separator = convert_separator(args.output_separator)
-    df = pd.read_csv(args.input_file, sep=input_separator, index_col=0, dtype=str)
+    df = csv_to_df(args.input_file, sep=input_separator)
 
     if args.replace:
         if args.spec:

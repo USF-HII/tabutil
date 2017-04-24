@@ -1,5 +1,14 @@
 # tabutil
 
+Command line utility providing operations on one or more tab-separated files formatted as matrices.
+
+*Note*:
+
+- Default separator is tab (`\t`).
+- All matrix files (spec_files using `--spec` not included) must contain a header line with column names.
+- All column data will be read in as the string type.
+- The first column of a matrix file will be transformed into the index.
+
 ## Install
 
 Install latest master:
