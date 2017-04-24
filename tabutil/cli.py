@@ -18,7 +18,7 @@ def custom_parser_comma(astring, separator=','):
 
 def read_spec(filename):
     with open(filename) as f:
-        return [line.rstrip() for line in f]
+        return [str(line.rstrip()) for line in f]
 
 def convert_separator(separator):
     if separator == '\\t':
