@@ -1,7 +1,7 @@
 all: unit install cli
 
 install:
-	bin/venv -- python setup.py install --force &>/dev/null
+	bin/venv -- python setup.py install &>/dev/null
 
 unit:
 	bin/venv -- nosetests --verbose tests

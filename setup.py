@@ -3,6 +3,9 @@
 import sys
 from setuptools import setup
 
+with open('version.txt') as f:
+    version = f.read().strip()
+
 install_requires = [
     'pandas>=0.19.2',
 ]
@@ -10,7 +13,7 @@ install_requires = [
 setup(
     name='tabutil',
     url='https://github.com/usf-hii/tabutil',
-    version='0.8.1',
+    version=version,
     description='Table Utility with Plink-like functionality',
     author='Kevin Counts',
     author_email='counts@digicat.org',
