@@ -1,8 +1,10 @@
-#!/usr/bin/env python3.5
+#!/usr/bin/env python3
 
 import argparse
 import sys
 import pandas as pd
+
+import tabutil
 import tabutil.core
 
 #------------------------------------------------------------------------------------------------------
@@ -190,15 +192,11 @@ def subcommand_cell(args):
 
         print(tabutil.core.cell_replace(df, changesets, separator=output_separator))
 
-def version():
-    with open('version.txt') as f:
-        return f.read()
-
 def main():
     parser = argparse.ArgumentParser('tabutil',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('--version', action='version', version=version())
+    parser.add_argument('--version', action='version', version=tabutil.__version__)
 
     parser.add_argument('--input-separator', action='store', dest='input_separator', default='\t')
     parser.add_argument('--output-separator', action='store', dest='output_separator', default='\t')
